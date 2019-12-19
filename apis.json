@@ -1,0 +1,67 @@
+{
+    "name": "Cronofy",
+    "description": "<p>Cronofy provides a single API for connecting to all calendar services. Developers can&rsquo;t choose which calendar services their customers rely on. Supporting them all is an unjustifiable development and maintenance burden. We take on that burden and in turn are able to offer rich integration at a price point that enables an array of valuable use cases<\/p>",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/cronofy_logo_400.png",
+    "tags": [
+        "api lifeycle",
+        "api provider",
+        "calendaring",
+        "have api",
+        "target"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/cronofy\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "Cronofy",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/cronofy_logo_400.png",
+            "humanURL": "https:\/\/www.cronofy.com\/",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/cronofy-openapi.json"
+                },
+                {
+                    "type": "x-postman-collecction",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/cronofy-postman-collection.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Blog",
+            "url": "https:\/\/www.cronofy.com\/blog\/"
+        },
+        {
+            "type": "Blog RSS",
+            "url": "https:\/\/www.cronofy.com\/feed\/"
+        },
+        {
+            "type": "Pricing",
+            "url": "https:\/\/www.cronofy.com\/pricing\/"
+        },
+        {
+            "type": "Privacy",
+            "url": "https:\/\/www.cronofy.com\/privacy-policy\/"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/cronofy"
+        },
+        {
+            "type": "Slack",
+            "url": "https:\/\/slack.cronofy.com"
+        },
+        {
+            "type": "Website",
+            "url": "https:\/\/www.cronofy.com\/"
+        }
+    ]
+}
