@@ -1,0 +1,175 @@
+aid: cronofy
+url: https://raw.githubusercontent.com/api-evangelist/cronofy/refs/heads/main/apis.yml
+name: Cronofy
+kind: company
+description: Cronofy is a scheduling and calendar API platform that provides a unified
+  interface to Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud.
+  Its REST API powers two-way calendar sync, real-time availability and scheduling,
+  smart invites, scheduling links, and push notifications for software teams embedding
+  scheduling into their products.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Scheduling
+- Calendar
+- Availability
+- Booking
+- Productivity
+created: '2026-06-21'
+modified: '2026-06-21'
+specificationVersion: '0.19'
+apis:
+- aid: cronofy:calendars
+  name: Cronofy Calendars API
+  tags:
+  - Calendars
+  - Profiles
+  - Identity
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.cronofy.com/developers/api/calendars/
+  baseURL: https://api.cronofy.com/v1
+  properties:
+  - url: https://docs.cronofy.com/developers/api/calendars/
+    type: Documentation
+  - url: https://docs.cronofy.com/developers/api/
+    type: APIReference
+  - url: openapi/cronofy-openapi.yml
+    type: OpenAPI
+  - url: collections/cronofy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/cronofy.opencollection.json
+    type: OpenCollection
+  description: List a user's connected calendars across Google, Microsoft 365 / Outlook,
+    Exchange, and Apple iCloud, create application calendars, and read account profile
+    and userinfo identity details.
+- aid: cronofy:events
+  name: Cronofy Events API
+  tags:
+  - Events
+  - Free-Busy
+  - Sync
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.cronofy.com/developers/api/events/
+  baseURL: https://api.cronofy.com/v1
+  properties:
+  - url: https://docs.cronofy.com/developers/api/events/
+    type: Documentation
+  - url: https://docs.cronofy.com/developers/api/events/free-busy/
+    type: APIReference
+  - url: openapi/cronofy-openapi.yml
+    type: OpenAPI
+  - url: collections/cronofy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/cronofy.opencollection.json
+    type: OpenCollection
+  description: Read events and free/busy information across all of a user's calendars,
+    and create, update, or delete events within a managed calendar with two-way sync.
+- aid: cronofy:availability
+  name: Cronofy Availability API
+  tags:
+  - Availability
+  - Scheduling
+  - Real-Time Scheduling
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.cronofy.com/developers/api/scheduling/availability/
+  baseURL: https://api.cronofy.com/v1
+  properties:
+  - url: https://docs.cronofy.com/developers/api/scheduling/
+    type: Documentation
+  - url: https://docs.cronofy.com/developers/api/scheduling/availability/
+    type: APIReference
+  - url: openapi/cronofy-openapi.yml
+    type: OpenAPI
+  - url: collections/cronofy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/cronofy.opencollection.json
+    type: OpenCollection
+  description: Query common availability for people and resources, run sequenced availability
+    across multiple events, and generate hosted Real-Time Scheduling and Real-Time
+    Sequencing pages backed by live calendar data.
+- aid: cronofy:smart-invites
+  name: Cronofy Smart Invites API
+  tags:
+  - Smart Invites
+  - Calendar Invites
+  - No Auth
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.cronofy.com/developers/api/smart-invites/
+  baseURL: https://api.cronofy.com/v1
+  properties:
+  - url: https://docs.cronofy.com/developers/api/smart-invites/
+    type: Documentation
+  - url: https://docs.cronofy.com/developers/api/smart-invites/create-smart-invite/
+    type: APIReference
+  - url: openapi/cronofy-openapi.yml
+    type: OpenAPI
+  - url: collections/cronofy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/cronofy.opencollection.json
+    type: OpenCollection
+  description: Send users calendar invites and track their interactions (accept, decline,
+    tentative) without requiring any calendar authorization, with create, update,
+    cancel, and status retrieval.
+- aid: cronofy:scheduling-links
+  name: Cronofy Scheduling Links API
+  tags:
+  - Scheduling Links
+  - Booking
+  - Real-Time Booking
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.cronofy.com/developers/api/scheduling/real-time-scheduling/
+  baseURL: https://api.cronofy.com/v1
+  properties:
+  - url: https://docs.cronofy.com/developers/api/scheduling/real-time-scheduling/
+    type: Documentation
+  - url: https://docs.cronofy.com/developers/api/scheduling/
+    type: APIReference
+  - url: openapi/cronofy-openapi.yml
+    type: OpenAPI
+  - url: collections/cronofy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/cronofy.opencollection.json
+    type: OpenCollection
+  description: Generate shareable Real-Time Scheduling URLs where invitees pick a preferred
+    time from live availability, with the resulting event written into the host's
+    calendar automatically.
+- aid: cronofy:push-notifications
+  name: Cronofy Push Notifications API
+  tags:
+  - Push Notifications
+  - Channels
+  - Webhooks
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.cronofy.com/developers/api/push-notifications/
+  baseURL: https://api.cronofy.com/v1
+  properties:
+  - url: https://docs.cronofy.com/developers/api/push-notifications/
+    type: Documentation
+  - url: https://docs.cronofy.com/developers/api/push-notifications/create-channel/
+    type: APIReference
+  - url: openapi/cronofy-openapi.yml
+    type: OpenAPI
+  - url: collections/cronofy.postman_collection.json
+    type: PostmanCollection
+  - url: collections/cronofy.opencollection.json
+    type: OpenCollection
+  description: Create, list, and close notification channels that deliver real-time
+    push notifications to a callback URL whenever changes occur in a user's connected
+    calendars.
+common:
+- type: GitHubOrganization
+  url: https://github.com/cronofy
+- type: LinkedIn
+  url: https://www.linkedin.com/company/cronofy
+- type: Website
+  url: https://www.cronofy.com
+- type: Documentation
+  url: https://docs.cronofy.com/developers/
+- type: Plans
+  url: plans/cronofy-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/cronofy-rate-limits.yml
+- type: FinOps
+  url: finops/cronofy-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

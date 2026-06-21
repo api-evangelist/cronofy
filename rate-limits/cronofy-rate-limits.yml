@@ -1,0 +1,55 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Cronofy
+providerId: cronofy
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Scheduling
+- Calendar
+- Availability
+- Booking
+- Productivity
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Cronofy advertises unlimited API calls on its paid API tiers and does not
+  publish fixed numeric per-second or per-minute request quotas in its public
+  developer documentation. To protect the platform, Cronofy applies abuse
+  protection and may throttle abnormal traffic, returning HTTP 429 when a
+  client is temporarily rate limited. The batch endpoint caps a single
+  request at 50 sub-requests. Specific numeric limits are not reconciled in
+  this artifact.
+notes: >-
+  Verify current throttling behaviour, Retry-After handling, and any
+  account- or endpoint-specific limits with Cronofy support and the developer
+  documentation during reconciliation. "Unlimited API calls" is a commercial
+  statement and does not preclude protective throttling.
+sources:
+- https://docs.cronofy.com/developers/api/
+- https://docs.cronofy.com/developers/api/batch/
+- https://www.cronofy.com/api-pricing
+responseCodes:
+  throttled: 429
+limits:
+- name: Request Throttling
+  scope: account
+  metric: requests
+  limit: not publicly published (unlimited API calls advertised; protective throttling applies)
+  notes: Cronofy may return 429 when abnormal or abusive traffic is detected.
+- name: Batch Sub-Requests
+  scope: request
+  metric: requests
+  limit: 50
+  notes: The batch endpoint allows up to 50 requests to be submitted in a single call.
+policies:
+- name: Abuse Protection
+  description: Cronofy throttles abnormal traffic to protect platform stability even though paid tiers advertise unlimited API calls.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

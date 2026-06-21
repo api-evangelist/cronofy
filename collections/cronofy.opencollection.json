@@ -1,0 +1,267 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cronofy API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Calendars",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Account identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/userinfo"
+          },
+          "docs": "Returns identity and profile information for the authenticated account."
+        },
+        {
+          "info": {
+            "name": "List calendars",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/calendars"
+          },
+          "docs": "Returns the list of calendars the authenticated user has connected."
+        },
+        {
+          "info": {
+            "name": "Create calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/calendars",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"profile_id\": \"{{profileId}}\",\n  \"name\": \"My Calendar\"\n}"
+            }
+          },
+          "docs": "Creates a new calendar within a connected calendar profile."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Read events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/events?tzid=Etc/UTC"
+          },
+          "docs": "Returns a paged list of events across all of a user's connected calendars."
+        },
+        {
+          "info": {
+            "name": "Free/busy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/free_busy?tzid=Etc/UTC"
+          },
+          "docs": "Returns free/busy information across all of a user's connected calendars."
+        },
+        {
+          "info": {
+            "name": "Create or update event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/calendars/{{calendarId}}/events",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"event_id\": \"event-001\",\n  \"summary\": \"Meeting\",\n  \"start\": \"2026-07-01T09:00:00Z\",\n  \"end\": \"2026-07-01T09:30:00Z\"\n}"
+            }
+          },
+          "docs": "Creates or updates an event within the specified calendar."
+        },
+        {
+          "info": {
+            "name": "Delete event",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.cronofy.com/v1/calendars/{{calendarId}}/events",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"event_id\": \"event-001\"\n}"
+            }
+          },
+          "docs": "Deletes an event, identified by event_id, from the specified calendar."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Availability",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Availability query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/availability",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"participants\": [],\n  \"required_duration\": { \"minutes\": 30 },\n  \"available_periods\": []\n}"
+            }
+          },
+          "docs": "Determines common available times for participants and resources."
+        },
+        {
+          "info": {
+            "name": "Sequenced availability query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/sequenced_availability",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Determines available times for a sequence of dependent events."
+        },
+        {
+          "info": {
+            "name": "Real-time scheduling",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/real_time_scheduling",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a URL to a hosted scheduling page backed by live availability."
+        },
+        {
+          "info": {
+            "name": "Real-time sequencing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/real_time_sequencing",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a URL to a hosted page for selecting times across a sequence of events."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Smart Invites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create or update smart invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/smart_invites",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"smart_invite_id\": \"invite-001\",\n  \"callback_url\": \"https://example.com/callback\",\n  \"recipient\": { \"email\": \"person@example.com\" },\n  \"event\": {\n    \"summary\": \"Meeting\",\n    \"start\": \"2026-07-01T09:00:00Z\",\n    \"end\": \"2026-07-01T09:30:00Z\"\n  }\n}"
+            }
+          },
+          "docs": "Creates or updates a Smart Invite for a recipient without calendar authorization."
+        },
+        {
+          "info": {
+            "name": "Get smart invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/smart_invites?smart_invite_id=invite-001"
+          },
+          "docs": "Retrieves the current state of a Smart Invite, including recipient RSVP status."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Push Notifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create notification channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/channels",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"callback_url\": \"https://example.com/notifications\"\n}"
+            }
+          },
+          "docs": "Creates a push notification channel that POSTs to callback_url on changes."
+        },
+        {
+          "info": {
+            "name": "List notification channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/channels"
+          },
+          "docs": "Returns all of the authenticated user's open notification channels."
+        },
+        {
+          "info": {
+            "name": "Close notification channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.cronofy.com/v1/channels/{{channelId}}"
+          },
+          "docs": "Closes an existing push notification channel."
+        }
+      ]
+    }
+  ]
+}

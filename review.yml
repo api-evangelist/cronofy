@@ -1,0 +1,81 @@
+aid: cronofy
+name: Cronofy
+review:
+  question: Does Cronofy expose a documented public WebSocket API?
+  answer: false
+  date: '2026-06-21'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    Cronofy's real-time delivery surface is HTTP push notifications
+    (webhooks), not WebSocket or Server-Sent Events. Under the API
+    Evangelist scope, webhook callbacks are out of band of AsyncAPI
+    streaming modeling and no AsyncAPI document was created. The push
+    notification channel surface is modeled in the OpenAPI document as
+    REST channel-management endpoints (POST/GET/DELETE /v1/channels).
+findings:
+  summary: |
+    Cronofy does not publish a documented public WebSocket API. The Cronofy
+    platform is a REST (HTTPS) API under https://api.cronofy.com/v1 (with
+    regional data-center hosts such as api-uk, api-de, api-au, api-ca, and
+    api-sg). Authentication is OAuth 2.0 with a Bearer access token passed
+    in the Authorization header. Real-time change delivery is implemented as
+    HTTP push notifications: clients create a notification channel
+    (POST /v1/channels) with a callback_url, and Cronofy POSTs notifications
+    to that URL when calendars change. This is a server-to-client webhook
+    over HTTPS, not a WebSocket (ws:// or wss://) or SSE stream. No
+    bidirectional or persistent socket transport is documented.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.cronofy.com/v1
+      documented: true
+    - protocol: Webhook
+      scheme: https
+      note: Push notifications are delivered as HTTP POST callbacks to a client-supplied callback_url registered via POST /v1/channels. Not WebSocket.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Cronofy's API reference, push notifications, scheduling, or any other product page as of the review date.
+  endpointsConfirmedRest:
+    - GET    https://api.cronofy.com/v1/userinfo
+    - GET    https://api.cronofy.com/v1/calendars
+    - POST   https://api.cronofy.com/v1/calendars
+    - GET    https://api.cronofy.com/v1/events
+    - GET    https://api.cronofy.com/v1/free_busy
+    - POST   https://api.cronofy.com/v1/calendars/{calendar_id}/events
+    - DELETE https://api.cronofy.com/v1/calendars/{calendar_id}/events
+    - POST   https://api.cronofy.com/v1/availability
+    - POST   https://api.cronofy.com/v1/sequenced_availability
+    - POST   https://api.cronofy.com/v1/real_time_scheduling
+    - POST   https://api.cronofy.com/v1/real_time_sequencing
+    - POST   https://api.cronofy.com/v1/smart_invites
+    - GET    https://api.cronofy.com/v1/smart_invites
+    - POST   https://api.cronofy.com/v1/channels
+    - GET    https://api.cronofy.com/v1/channels
+    - DELETE https://api.cronofy.com/v1/channels/{channel_id}
+sources:
+  - url: https://docs.cronofy.com/developers/api/
+    type: APIReference
+    note: API reference index; all documented endpoints are HTTPS REST under /v1.
+  - url: https://docs.cronofy.com/developers/api/authentication/
+    type: Documentation
+    note: Access tokens MUST be passed as a Bearer Authorization header (OAuth 2.0).
+  - url: https://docs.cronofy.com/developers/api/push-notifications/
+    type: Documentation
+    note: Real-time changes are delivered via HTTP push notification channels (callback_url), not WebSocket or SSE.
+  - url: https://docs.cronofy.com/developers/api/scheduling/
+    type: Documentation
+    note: Availability and real-time scheduling are REST POST endpoints; hosted scheduling pages are returned as URLs.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or SSE protocol surface exists. Cronofy's only asynchronous
+    delivery mechanism is HTTP webhook push notifications, modeled as REST
+    channel-management endpoints in the OpenAPI document. No AsyncAPI
+    artifact was created.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

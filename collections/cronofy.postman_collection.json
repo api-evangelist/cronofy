@@ -1,0 +1,323 @@
+{
+  "info": {
+    "_postman_id": "c1a0f0e2-3b4d-4e5a-9f6c-7a8b9c0d1e2f",
+    "name": "Cronofy API",
+    "description": "Cronofy scheduling and calendar API: connected calendars, two-way event sync, free/busy and availability, real-time scheduling, smart invites, and push notification channels. Authenticated with an OAuth 2.0 Bearer access token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.cronofy.com/v1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Calendars",
+      "item": [
+        {
+          "name": "Account identity",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/userinfo",
+              "host": ["{{baseUrl}}"],
+              "path": ["userinfo"]
+            },
+            "description": "Returns identity and profile information for the authenticated account."
+          },
+          "response": []
+        },
+        {
+          "name": "List calendars",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/calendars",
+              "host": ["{{baseUrl}}"],
+              "path": ["calendars"]
+            },
+            "description": "Returns the list of calendars the authenticated user has connected."
+          },
+          "response": []
+        },
+        {
+          "name": "Create calendar",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"profile_id\": \"{{profileId}}\",\n  \"name\": \"My Calendar\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/calendars",
+              "host": ["{{baseUrl}}"],
+              "path": ["calendars"]
+            },
+            "description": "Creates a new calendar within a connected calendar profile."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Read events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events?tzid=Etc/UTC",
+              "host": ["{{baseUrl}}"],
+              "path": ["events"],
+              "query": [{ "key": "tzid", "value": "Etc/UTC" }]
+            },
+            "description": "Returns a paged list of events across all of a user's connected calendars."
+          },
+          "response": []
+        },
+        {
+          "name": "Free/busy",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/free_busy?tzid=Etc/UTC",
+              "host": ["{{baseUrl}}"],
+              "path": ["free_busy"],
+              "query": [{ "key": "tzid", "value": "Etc/UTC" }]
+            },
+            "description": "Returns free/busy information across all of a user's connected calendars."
+          },
+          "response": []
+        },
+        {
+          "name": "Create or update event",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_id\": \"event-001\",\n  \"summary\": \"Meeting\",\n  \"start\": \"2026-07-01T09:00:00Z\",\n  \"end\": \"2026-07-01T09:30:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/calendars/{{calendarId}}/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["calendars", "{{calendarId}}", "events"]
+            },
+            "description": "Creates or updates an event within the specified calendar."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete event",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_id\": \"event-001\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/calendars/{{calendarId}}/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["calendars", "{{calendarId}}", "events"]
+            },
+            "description": "Deletes an event, identified by event_id, from the specified calendar."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Availability",
+      "item": [
+        {
+          "name": "Availability query",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participants\": [],\n  \"required_duration\": { \"minutes\": 30 },\n  \"available_periods\": []\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/availability",
+              "host": ["{{baseUrl}}"],
+              "path": ["availability"]
+            },
+            "description": "Determines common available times for participants and resources."
+          },
+          "response": []
+        },
+        {
+          "name": "Sequenced availability query",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": {
+              "raw": "{{baseUrl}}/sequenced_availability",
+              "host": ["{{baseUrl}}"],
+              "path": ["sequenced_availability"]
+            },
+            "description": "Determines available times for a sequence of dependent events."
+          },
+          "response": []
+        },
+        {
+          "name": "Real-time scheduling",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": {
+              "raw": "{{baseUrl}}/real_time_scheduling",
+              "host": ["{{baseUrl}}"],
+              "path": ["real_time_scheduling"]
+            },
+            "description": "Returns a URL to a hosted scheduling page backed by live availability."
+          },
+          "response": []
+        },
+        {
+          "name": "Real-time sequencing",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": {
+              "raw": "{{baseUrl}}/real_time_sequencing",
+              "host": ["{{baseUrl}}"],
+              "path": ["real_time_sequencing"]
+            },
+            "description": "Returns a URL to a hosted page for selecting times across a sequence of events."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Smart Invites",
+      "item": [
+        {
+          "name": "Create or update smart invite",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"smart_invite_id\": \"invite-001\",\n  \"callback_url\": \"https://example.com/callback\",\n  \"recipient\": { \"email\": \"person@example.com\" },\n  \"event\": {\n    \"summary\": \"Meeting\",\n    \"start\": \"2026-07-01T09:00:00Z\",\n    \"end\": \"2026-07-01T09:30:00Z\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/smart_invites",
+              "host": ["{{baseUrl}}"],
+              "path": ["smart_invites"]
+            },
+            "description": "Creates or updates a Smart Invite for a recipient without calendar authorization."
+          },
+          "response": []
+        },
+        {
+          "name": "Get smart invite",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/smart_invites?smart_invite_id=invite-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["smart_invites"],
+              "query": [{ "key": "smart_invite_id", "value": "invite-001" }]
+            },
+            "description": "Retrieves the current state of a Smart Invite, including recipient RSVP status."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Push Notifications",
+      "item": [
+        {
+          "name": "Create notification channel",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"callback_url\": \"https://example.com/notifications\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/channels",
+              "host": ["{{baseUrl}}"],
+              "path": ["channels"]
+            },
+            "description": "Creates a push notification channel that POSTs to callback_url on changes."
+          },
+          "response": []
+        },
+        {
+          "name": "List notification channels",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/channels",
+              "host": ["{{baseUrl}}"],
+              "path": ["channels"]
+            },
+            "description": "Returns all of the authenticated user's open notification channels."
+          },
+          "response": []
+        },
+        {
+          "name": "Close notification channel",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/channels/{{channelId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["channels", "{{channelId}}"]
+            },
+            "description": "Closes an existing push notification channel."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

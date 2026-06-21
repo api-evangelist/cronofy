@@ -1,0 +1,852 @@
+openapi: 3.0.1
+info:
+  title: Cronofy API
+  description: >-
+    The Cronofy API is a REST interface for embedding scheduling and calendar
+    functionality into applications. It provides a unified abstraction over
+    Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud,
+    covering connected calendars, two-way event sync, free/busy and
+    availability querying, real-time scheduling pages, smart invites, and push
+    notification channels. All requests are authenticated with an OAuth 2.0
+    Bearer access token.
+  termsOfService: https://www.cronofy.com/legal/terms
+  contact:
+    name: Cronofy Support
+    url: https://docs.cronofy.com/developers/
+    email: support@cronofy.com
+  version: '1.0'
+servers:
+  - url: https://api.cronofy.com/v1
+    description: United States data center (default)
+  - url: https://api-uk.cronofy.com/v1
+    description: United Kingdom data center
+  - url: https://api-de.cronofy.com/v1
+    description: Germany data center
+  - url: https://api-au.cronofy.com/v1
+    description: Australia data center
+  - url: https://api-ca.cronofy.com/v1
+    description: Canada data center
+  - url: https://api-sg.cronofy.com/v1
+    description: Singapore data center
+security:
+  - bearerAuth: []
+tags:
+  - name: Calendars
+    description: Connected calendars, application calendars, and account identity.
+  - name: Events
+    description: Reading, creating, updating, and deleting events plus free/busy.
+  - name: Availability
+    description: Availability queries and hosted real-time scheduling.
+  - name: Smart Invites
+    description: Calendar invites tracked without calendar authorization.
+  - name: Push Notifications
+    description: Notification channels for real-time calendar changes.
+paths:
+  /userinfo:
+    get:
+      operationId: getUserInfo
+      tags:
+        - Calendars
+      summary: Account identity
+      description: Returns identity and profile information for the authenticated account, including connected calendar profiles.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /calendars:
+    get:
+      operationId: listCalendars
+      tags:
+        - Calendars
+      summary: List calendars
+      description: Returns the list of calendars the authenticated user has connected across all linked calendar profiles.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalendarList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createCalendar
+      tags:
+        - Calendars
+      summary: Create calendar
+      description: Creates a new calendar within a connected calendar profile.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCalendarRequest'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalendarWrapper'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /events:
+    get:
+      operationId: readEvents
+      tags:
+        - Events
+      summary: Read events
+      description: Returns a paged list of events across all of a user's connected calendars within the requested period.
+      parameters:
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date
+          description: The minimum date (inclusive) from which to return events.
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date
+          description: The maximum date (exclusive) up to which to return events.
+        - name: tzid
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The time zone id used to interpret and return event times, e.g. Etc/UTC.
+        - name: calendar_ids[]
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+          description: Restrict results to the given calendar ids.
+        - name: last_modified
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Only return events modified since this timestamp.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /free_busy:
+    get:
+      operationId: readFreeBusy
+      tags:
+        - Events
+      summary: Free/busy
+      description: Returns free/busy information across all of a user's connected calendars without exposing event detail.
+      parameters:
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: tzid
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: calendar_ids[]
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FreeBusyList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /calendars/{calendar_id}/events:
+    post:
+      operationId: upsertEvent
+      tags:
+        - Events
+      summary: Create or update event
+      description: Creates or updates an event within the specified calendar, keyed on the caller-supplied event_id.
+      parameters:
+        - $ref: '#/components/parameters/CalendarId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertEventRequest'
+      responses:
+        '202':
+          description: Accepted - the event has been queued for creation or update.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: deleteEvent
+      tags:
+        - Events
+      summary: Delete event
+      description: Deletes an event, identified by event_id, from the specified calendar.
+      parameters:
+        - $ref: '#/components/parameters/CalendarId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteEventRequest'
+      responses:
+        '202':
+          description: Accepted - the event has been queued for deletion.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /availability:
+    post:
+      operationId: availabilityQuery
+      tags:
+        - Availability
+      summary: Availability query
+      description: Inspects the calendars of the specified participants and resources to determine common available times within the requested periods.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvailabilityRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /sequenced_availability:
+    post:
+      operationId: sequencedAvailability
+      tags:
+        - Availability
+      summary: Sequenced availability query
+      description: Determines available times for a sequence of dependent events, honoring ordering and gap constraints between them.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /real_time_scheduling:
+    post:
+      operationId: realTimeScheduling
+      tags:
+        - Availability
+      summary: Real-time scheduling
+      description: Returns a URL to a hosted scheduling page where an invitee selects a preferred time from live availability; the resulting event is written into the host's calendar.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RealTimeSchedulingRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealTimeSchedulingResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /real_time_sequencing:
+    post:
+      operationId: realTimeSequencing
+      tags:
+        - Availability
+      summary: Real-time sequencing
+      description: Returns a URL to a hosted page for selecting times across a sequence of related events backed by live availability.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /smart_invites:
+    post:
+      operationId: upsertSmartInvite
+      tags:
+        - Smart Invites
+      summary: Create or update smart invite
+      description: Creates or updates a Smart Invite for a recipient. Set method to "cancel" to cancel a previously sent invite. No calendar authorization of the recipient is required.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmartInviteRequest'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartInviteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    get:
+      operationId: getSmartInvite
+      tags:
+        - Smart Invites
+      summary: Get smart invite
+      description: Retrieves the current state of a Smart Invite, including each recipient's RSVP status.
+      parameters:
+        - name: smart_invite_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: recipient_email
+          in: query
+          schema:
+            type: string
+            format: email
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartInviteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /channels:
+    post:
+      operationId: createChannel
+      tags:
+        - Push Notifications
+      summary: Create notification channel
+      description: Creates a push notification channel; Cronofy will POST a notification to the supplied callback_url when changes occur in the user's calendars.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateChannelRequest'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelWrapper'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    get:
+      operationId: listChannels
+      tags:
+        - Push Notifications
+      summary: List notification channels
+      description: Returns all of the authenticated user's open notification channels.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /channels/{channel_id}:
+    delete:
+      operationId: closeChannel
+      tags:
+        - Push Notifications
+      summary: Close notification channel
+      description: Closes an existing push notification channel so that no further notifications are sent.
+      parameters:
+        - name: channel_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: Accepted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 access token passed as an Authorization Bearer header.
+  parameters:
+    CalendarId:
+      name: calendar_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The Cronofy id of the target calendar.
+  responses:
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
+    UserInfo:
+      type: object
+      properties:
+        sub:
+          type: string
+          description: The unique account identifier.
+        cronofy.type:
+          type: string
+        cronofy.data:
+          type: object
+          additionalProperties: true
+    CalendarList:
+      type: object
+      properties:
+        calendars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Calendar'
+    CalendarWrapper:
+      type: object
+      properties:
+        calendar:
+          $ref: '#/components/schemas/Calendar'
+    Calendar:
+      type: object
+      properties:
+        provider_name:
+          type: string
+          description: The underlying provider, e.g. google, apple, exchange, office365.
+        profile_id:
+          type: string
+        profile_name:
+          type: string
+        calendar_id:
+          type: string
+        calendar_name:
+          type: string
+        calendar_readonly:
+          type: boolean
+        calendar_deleted:
+          type: boolean
+        calendar_primary:
+          type: boolean
+        permission_level:
+          type: string
+    CreateCalendarRequest:
+      type: object
+      required:
+        - profile_id
+        - name
+      properties:
+        profile_id:
+          type: string
+          description: The profile within which to create the calendar.
+        name:
+          type: string
+          description: The name of the new calendar.
+        color:
+          type: string
+          description: An optional hex color for the calendar.
+    EventList:
+      type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Pages'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    Pages:
+      type: object
+      properties:
+        current:
+          type: integer
+        total:
+          type: integer
+        next_page:
+          type: string
+    Event:
+      type: object
+      properties:
+        calendar_id:
+          type: string
+        event_uid:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        start:
+          type: string
+          description: An RFC 3339 timestamp or a date for all-day events.
+        end:
+          type: string
+        location:
+          type: object
+          properties:
+            description:
+              type: string
+        deleted:
+          type: boolean
+        free_busy_status:
+          type: string
+          enum:
+            - free
+            - tentative
+            - busy
+            - unavailable
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attendee'
+    Attendee:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        display_name:
+          type: string
+        status:
+          type: string
+          enum:
+            - needs_action
+            - accepted
+            - declined
+            - tentative
+    FreeBusyList:
+      type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Pages'
+        free_busy:
+          type: array
+          items:
+            type: object
+            properties:
+              calendar_id:
+                type: string
+              start:
+                type: string
+              end:
+                type: string
+              free_busy_status:
+                type: string
+                enum:
+                  - free
+                  - tentative
+                  - busy
+                  - unavailable
+    UpsertEventRequest:
+      type: object
+      required:
+        - event_id
+        - summary
+        - start
+        - end
+      properties:
+        event_id:
+          type: string
+          description: A caller-supplied identifier used to create or update the event idempotently.
+        summary:
+          type: string
+        description:
+          type: string
+        start:
+          type: string
+          description: An RFC 3339 timestamp or a date for all-day events.
+        end:
+          type: string
+        tzid:
+          type: string
+        location:
+          type: object
+          properties:
+            description:
+              type: string
+        attendees:
+          type: object
+          properties:
+            invite:
+              type: array
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    format: email
+                  display_name:
+                    type: string
+        transparency:
+          type: string
+          enum:
+            - opaque
+            - transparent
+    DeleteEventRequest:
+      type: object
+      required:
+        - event_id
+      properties:
+        event_id:
+          type: string
+          description: The caller-supplied identifier of the event to delete.
+    AvailabilityRequest:
+      type: object
+      required:
+        - participants
+        - required_duration
+        - available_periods
+      properties:
+        participants:
+          type: array
+          items:
+            type: object
+            properties:
+              members:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sub:
+                      type: string
+                      description: The account identifier of a participant.
+              required:
+                oneOf:
+                  - type: string
+                  - type: integer
+        required_duration:
+          type: object
+          properties:
+            minutes:
+              type: integer
+        available_periods:
+          type: array
+          items:
+            type: object
+            properties:
+              start:
+                type: string
+              end:
+                type: string
+    AvailabilityResponse:
+      type: object
+      properties:
+        available_periods:
+          type: array
+          items:
+            type: object
+            properties:
+              start:
+                type: string
+              end:
+                type: string
+              participants:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sub:
+                      type: string
+    RealTimeSchedulingRequest:
+      type: object
+      required:
+        - oauth
+        - event
+        - availability
+        - target_calendars
+      properties:
+        oauth:
+          type: object
+          properties:
+            redirect_uri:
+              type: string
+              format: uri
+        event:
+          $ref: '#/components/schemas/UpsertEventRequest'
+        availability:
+          $ref: '#/components/schemas/AvailabilityRequest'
+        target_calendars:
+          type: array
+          items:
+            type: object
+            properties:
+              sub:
+                type: string
+              calendar_id:
+                type: string
+    RealTimeSchedulingResponse:
+      type: object
+      properties:
+        real_time_scheduling:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The hosted scheduling page URL to present to the invitee.
+            status:
+              type: string
+    SmartInviteRequest:
+      type: object
+      required:
+        - smart_invite_id
+        - callback_url
+        - recipient
+        - event
+      properties:
+        method:
+          type: string
+          enum:
+            - request
+            - cancel
+          description: Use "cancel" to cancel a previously sent invite.
+        smart_invite_id:
+          type: string
+        callback_url:
+          type: string
+          format: uri
+        recipient:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+        event:
+          $ref: '#/components/schemas/UpsertEventRequest'
+    SmartInviteResponse:
+      type: object
+      properties:
+        smart_invite_id:
+          type: string
+        callback_url:
+          type: string
+          format: uri
+        recipient:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            status:
+              type: string
+              enum:
+                - pending
+                - accepted
+                - declined
+                - tentative
+        attachments:
+          type: object
+          properties:
+            icalendar:
+              type: string
+              description: The iCalendar (.ics) attachment representing the invite.
+    CreateChannelRequest:
+      type: object
+      required:
+        - callback_url
+      properties:
+        callback_url:
+          type: string
+          format: uri
+          description: The HTTPS URL Cronofy will POST notifications to when calendars change.
+        filters:
+          type: object
+          properties:
+            calendar_ids:
+              type: array
+              items:
+                type: string
+            only_managed:
+              type: boolean
+    ChannelWrapper:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/Channel'
+    ChannelList:
+      type: object
+      properties:
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Channel'
+    Channel:
+      type: object
+      properties:
+        channel_id:
+          type: string
+        callback_url:
+          type: string
+          format: uri
+        filters:
+          type: object
+          additionalProperties: true

@@ -1,0 +1,146 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Cronofy
+providerId: cronofy
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Scheduling
+- Calendar
+- Availability
+- Booking
+- Productivity
+- Plans
+description: >-
+  Cronofy prices its developer API in seat-based tiers metered on synced
+  (connected) accounts, with unlimited API calls included on every tier.
+  Published API pricing tiers are Emerging and Growth, with a custom
+  Strategic tier for large-scale deployments. Cronofy also offers
+  separately-priced Meeting Agents (recording / transcription). Exact list
+  prices change frequently; values here are representative and not reconciled.
+notes: >-
+  Prices reflect annually-billed list pricing observed on the Cronofy API
+  pricing page and are subject to change. Verify current tiers, included
+  account counts, and per-account overage rates at cronofy.com/api-pricing
+  during reconciliation.
+sources:
+- https://www.cronofy.com/api-pricing
+- https://www.cronofy.com/pricing
+- https://docs.cronofy.com/developers/
+plans:
+- id: cronofy-emerging
+  name: Emerging
+  type: subscription
+  description: >-
+    Entry API tier with up to 1,000 synced accounts included and unlimited
+    API calls, two-way calendar sync, and GDPR / HIPAA compliance.
+  entries:
+  - label: Base Subscription
+    name: emerging_base
+    type: flat
+    metric: subscription
+    limit: 1000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $819/month billed annually (up to 1,000 synced accounts)
+    userMultiplied: false
+  - label: Additional Synced Account
+    name: emerging_overage
+    type: usage
+    metric: accounts
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.69 per additional synced account / month
+    userMultiplied: true
+  elements:
+  - name: Calendars
+  - name: Events
+  - name: Free-Busy
+  - name: Availability
+  - name: Smart Invites
+  - name: Scheduling Links
+  - name: Push Notifications
+- id: cronofy-growth
+  name: Growth
+  type: subscription
+  description: >-
+    Scaling API tier with up to 6,000 synced accounts included, unlimited
+    API calls, and lower per-account overage than Emerging.
+  entries:
+  - label: Base Subscription
+    name: growth_base
+    type: flat
+    metric: subscription
+    limit: 6000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $2,399/month billed annually (up to 6,000 synced accounts)
+    userMultiplied: false
+  - label: Additional Synced Account
+    name: growth_overage
+    type: usage
+    metric: accounts
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.35 per additional synced account / month
+    userMultiplied: true
+  elements:
+  - name: Calendars
+  - name: Events
+  - name: Free-Busy
+  - name: Availability
+  - name: Smart Invites
+  - name: Scheduling Links
+  - name: Push Notifications
+- id: cronofy-strategic
+  name: Strategic
+  type: enterprise
+  description: >-
+    Custom enterprise tier for large-scale projects with negotiated synced
+    account volumes, dedicated support, and tailored terms. Contact sales.
+  entries:
+  - label: Enterprise Agreement
+    name: strategic
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Dedicated Support
+  - name: Enterprise Connect
+- id: cronofy-meeting-agents
+  name: Meeting Agents
+  type: usage
+  description: >-
+    Separately-priced recording and transcription agents, billed per hour
+    with a monthly minimum commitment.
+  entries:
+  - label: Meeting Agent Hours
+    name: meeting_agent_hours
+    type: usage
+    metric: hours
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.59-$0.79 per hour (volume dependent), $99 monthly minimum
+    userMultiplied: false
+  elements:
+  - name: Recording
+  - name: Transcription
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
