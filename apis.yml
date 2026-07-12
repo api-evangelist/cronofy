@@ -156,6 +156,10 @@ apis:
     push notifications to a callback URL whenever changes occur in a user's connected
     calendars.
 common:
+- type: DomainSecurity
+  url: security/cronofy-domain-security.yml
+- type: Authentication
+  url: authentication/cronofy-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/cronofy
 - type: LinkedIn
@@ -170,6 +174,8 @@ common:
   url: rate-limits/cronofy-rate-limits.yml
 - type: FinOps
   url: finops/cronofy-finops.yml
+- url: https://www.cronofy.com/blog
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

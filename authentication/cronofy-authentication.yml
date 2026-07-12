@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/cronofy-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: OAuth 2.0 access token passed as an Authorization Bearer header.
+  sources:
+  - openapi/cronofy-openapi.yml
