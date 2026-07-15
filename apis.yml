@@ -156,6 +156,8 @@ apis:
     push notifications to a callback URL whenever changes occur in a user's connected
     calendars.
 common:
+- type: AgenticAccess
+  url: agentic-access/cronofy-agentic-access.yml
 - type: DomainSecurity
   url: security/cronofy-domain-security.yml
 - type: Authentication
