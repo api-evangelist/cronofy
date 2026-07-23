@@ -1,0 +1,205 @@
+openapi: 3.0.1
+info:
+  title: Cronofy Availability Smart Invites API
+  description: The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.
+  termsOfService: https://www.cronofy.com/legal/terms
+  contact:
+    name: Cronofy Support
+    url: https://docs.cronofy.com/developers/
+    email: support@cronofy.com
+  version: '1.0'
+servers:
+- url: https://api.cronofy.com/v1
+  description: United States data center (default)
+- url: https://api-uk.cronofy.com/v1
+  description: United Kingdom data center
+- url: https://api-de.cronofy.com/v1
+  description: Germany data center
+- url: https://api-au.cronofy.com/v1
+  description: Australia data center
+- url: https://api-ca.cronofy.com/v1
+  description: Canada data center
+- url: https://api-sg.cronofy.com/v1
+  description: Singapore data center
+security:
+- bearerAuth: []
+tags:
+- name: Smart Invites
+  description: Calendar invites tracked without calendar authorization.
+paths:
+  /smart_invites:
+    post:
+      operationId: upsertSmartInvite
+      tags:
+      - Smart Invites
+      summary: Create or update smart invite
+      description: Creates or updates a Smart Invite for a recipient. Set method to "cancel" to cancel a previously sent invite. No calendar authorization of the recipient is required.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmartInviteRequest'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartInviteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    get:
+      operationId: getSmartInvite
+      tags:
+      - Smart Invites
+      summary: Get smart invite
+      description: Retrieves the current state of a Smart Invite, including each recipient's RSVP status.
+      parameters:
+      - name: smart_invite_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: recipient_email
+        in: query
+        schema:
+          type: string
+          format: email
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartInviteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    SmartInviteResponse:
+      type: object
+      properties:
+        smart_invite_id:
+          type: string
+        callback_url:
+          type: string
+          format: uri
+        recipient:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            status:
+              type: string
+              enum:
+              - pending
+              - accepted
+              - declined
+              - tentative
+        attachments:
+          type: object
+          properties:
+            icalendar:
+              type: string
+              description: The iCalendar (.ics) attachment representing the invite.
+    SmartInviteRequest:
+      type: object
+      required:
+      - smart_invite_id
+      - callback_url
+      - recipient
+      - event
+      properties:
+        method:
+          type: string
+          enum:
+          - request
+          - cancel
+          description: Use "cancel" to cancel a previously sent invite.
+        smart_invite_id:
+          type: string
+        callback_url:
+          type: string
+          format: uri
+        recipient:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+        event:
+          $ref: '#/components/schemas/UpsertEventRequest'
+    UpsertEventRequest:
+      type: object
+      required:
+      - event_id
+      - summary
+      - start
+      - end
+      properties:
+        event_id:
+          type: string
+          description: A caller-supplied identifier used to create or update the event idempotently.
+        summary:
+          type: string
+        description:
+          type: string
+        start:
+          type: string
+          description: An RFC 3339 timestamp or a date for all-day events.
+        end:
+          type: string
+        tzid:
+          type: string
+        location:
+          type: object
+          properties:
+            description:
+              type: string
+        attendees:
+          type: object
+          properties:
+            invite:
+              type: array
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    format: email
+                  display_name:
+                    type: string
+        transparency:
+          type: string
+          enum:
+          - opaque
+          - transparent
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 access token passed as an Authorization Bearer header.

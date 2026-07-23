@@ -1,0 +1,171 @@
+openapi: 3.0.1
+info:
+  title: Cronofy Availability Calendars API
+  description: The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.
+  termsOfService: https://www.cronofy.com/legal/terms
+  contact:
+    name: Cronofy Support
+    url: https://docs.cronofy.com/developers/
+    email: support@cronofy.com
+  version: '1.0'
+servers:
+- url: https://api.cronofy.com/v1
+  description: United States data center (default)
+- url: https://api-uk.cronofy.com/v1
+  description: United Kingdom data center
+- url: https://api-de.cronofy.com/v1
+  description: Germany data center
+- url: https://api-au.cronofy.com/v1
+  description: Australia data center
+- url: https://api-ca.cronofy.com/v1
+  description: Canada data center
+- url: https://api-sg.cronofy.com/v1
+  description: Singapore data center
+security:
+- bearerAuth: []
+tags:
+- name: Calendars
+  description: Connected calendars, application calendars, and account identity.
+paths:
+  /userinfo:
+    get:
+      operationId: getUserInfo
+      tags:
+      - Calendars
+      summary: Account identity
+      description: Returns identity and profile information for the authenticated account, including connected calendar profiles.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /calendars:
+    get:
+      operationId: listCalendars
+      tags:
+      - Calendars
+      summary: List calendars
+      description: Returns the list of calendars the authenticated user has connected across all linked calendar profiles.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalendarList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createCalendar
+      tags:
+      - Calendars
+      summary: Create calendar
+      description: Creates a new calendar within a connected calendar profile.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCalendarRequest'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalendarWrapper'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+components:
+  schemas:
+    CalendarWrapper:
+      type: object
+      properties:
+        calendar:
+          $ref: '#/components/schemas/Calendar'
+    Calendar:
+      type: object
+      properties:
+        provider_name:
+          type: string
+          description: The underlying provider, e.g. google, apple, exchange, office365.
+        profile_id:
+          type: string
+        profile_name:
+          type: string
+        calendar_id:
+          type: string
+        calendar_name:
+          type: string
+        calendar_readonly:
+          type: boolean
+        calendar_deleted:
+          type: boolean
+        calendar_primary:
+          type: boolean
+        permission_level:
+          type: string
+    CalendarList:
+      type: object
+      properties:
+        calendars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Calendar'
+    UserInfo:
+      type: object
+      properties:
+        sub:
+          type: string
+          description: The unique account identifier.
+        cronofy.type:
+          type: string
+        cronofy.data:
+          type: object
+          additionalProperties: true
+    CreateCalendarRequest:
+      type: object
+      required:
+      - profile_id
+      - name
+      properties:
+        profile_id:
+          type: string
+          description: The profile within which to create the calendar.
+        name:
+          type: string
+          description: The name of the new calendar.
+        color:
+          type: string
+          description: An optional hex color for the calendar.
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
+  responses:
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 access token passed as an Authorization Bearer header.

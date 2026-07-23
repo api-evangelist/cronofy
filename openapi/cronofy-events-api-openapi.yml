@@ -1,0 +1,336 @@
+openapi: 3.0.1
+info:
+  title: Cronofy Availability Events API
+  description: The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.
+  termsOfService: https://www.cronofy.com/legal/terms
+  contact:
+    name: Cronofy Support
+    url: https://docs.cronofy.com/developers/
+    email: support@cronofy.com
+  version: '1.0'
+servers:
+- url: https://api.cronofy.com/v1
+  description: United States data center (default)
+- url: https://api-uk.cronofy.com/v1
+  description: United Kingdom data center
+- url: https://api-de.cronofy.com/v1
+  description: Germany data center
+- url: https://api-au.cronofy.com/v1
+  description: Australia data center
+- url: https://api-ca.cronofy.com/v1
+  description: Canada data center
+- url: https://api-sg.cronofy.com/v1
+  description: Singapore data center
+security:
+- bearerAuth: []
+tags:
+- name: Events
+  description: Reading, creating, updating, and deleting events plus free/busy.
+paths:
+  /events:
+    get:
+      operationId: readEvents
+      tags:
+      - Events
+      summary: Read events
+      description: Returns a paged list of events across all of a user's connected calendars within the requested period.
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+        description: The minimum date (inclusive) from which to return events.
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+        description: The maximum date (exclusive) up to which to return events.
+      - name: tzid
+        in: query
+        required: true
+        schema:
+          type: string
+        description: The time zone id used to interpret and return event times, e.g. Etc/UTC.
+      - name: calendar_ids[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Restrict results to the given calendar ids.
+      - name: last_modified
+        in: query
+        schema:
+          type: string
+          format: date-time
+        description: Only return events modified since this timestamp.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /free_busy:
+    get:
+      operationId: readFreeBusy
+      tags:
+      - Events
+      summary: Free/busy
+      description: Returns free/busy information across all of a user's connected calendars without exposing event detail.
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: tzid
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: calendar_ids[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FreeBusyList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /calendars/{calendar_id}/events:
+    post:
+      operationId: upsertEvent
+      tags:
+      - Events
+      summary: Create or update event
+      description: Creates or updates an event within the specified calendar, keyed on the caller-supplied event_id.
+      parameters:
+      - $ref: '#/components/parameters/CalendarId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertEventRequest'
+      responses:
+        '202':
+          description: Accepted - the event has been queued for creation or update.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    delete:
+      operationId: deleteEvent
+      tags:
+      - Events
+      summary: Delete event
+      description: Deletes an event, identified by event_id, from the specified calendar.
+      parameters:
+      - $ref: '#/components/parameters/CalendarId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteEventRequest'
+      responses:
+        '202':
+          description: Accepted - the event has been queued for deletion.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+components:
+  schemas:
+    EventList:
+      type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Pages'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    DeleteEventRequest:
+      type: object
+      required:
+      - event_id
+      properties:
+        event_id:
+          type: string
+          description: The caller-supplied identifier of the event to delete.
+    Pages:
+      type: object
+      properties:
+        current:
+          type: integer
+        total:
+          type: integer
+        next_page:
+          type: string
+    UpsertEventRequest:
+      type: object
+      required:
+      - event_id
+      - summary
+      - start
+      - end
+      properties:
+        event_id:
+          type: string
+          description: A caller-supplied identifier used to create or update the event idempotently.
+        summary:
+          type: string
+        description:
+          type: string
+        start:
+          type: string
+          description: An RFC 3339 timestamp or a date for all-day events.
+        end:
+          type: string
+        tzid:
+          type: string
+        location:
+          type: object
+          properties:
+            description:
+              type: string
+        attendees:
+          type: object
+          properties:
+            invite:
+              type: array
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    format: email
+                  display_name:
+                    type: string
+        transparency:
+          type: string
+          enum:
+          - opaque
+          - transparent
+    Attendee:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        display_name:
+          type: string
+        status:
+          type: string
+          enum:
+          - needs_action
+          - accepted
+          - declined
+          - tentative
+    FreeBusyList:
+      type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Pages'
+        free_busy:
+          type: array
+          items:
+            type: object
+            properties:
+              calendar_id:
+                type: string
+              start:
+                type: string
+              end:
+                type: string
+              free_busy_status:
+                type: string
+                enum:
+                - free
+                - tentative
+                - busy
+                - unavailable
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
+    Event:
+      type: object
+      properties:
+        calendar_id:
+          type: string
+        event_uid:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        start:
+          type: string
+          description: An RFC 3339 timestamp or a date for all-day events.
+        end:
+          type: string
+        location:
+          type: object
+          properties:
+            description:
+              type: string
+        deleted:
+          type: boolean
+        free_busy_status:
+          type: string
+          enum:
+          - free
+          - tentative
+          - busy
+          - unavailable
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attendee'
+  responses:
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    CalendarId:
+      name: calendar_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The Cronofy id of the target calendar.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 access token passed as an Authorization Bearer header.

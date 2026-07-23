@@ -1,0 +1,285 @@
+openapi: 3.0.1
+info:
+  title: Cronofy Availability API
+  description: The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.
+  termsOfService: https://www.cronofy.com/legal/terms
+  contact:
+    name: Cronofy Support
+    url: https://docs.cronofy.com/developers/
+    email: support@cronofy.com
+  version: '1.0'
+servers:
+- url: https://api.cronofy.com/v1
+  description: United States data center (default)
+- url: https://api-uk.cronofy.com/v1
+  description: United Kingdom data center
+- url: https://api-de.cronofy.com/v1
+  description: Germany data center
+- url: https://api-au.cronofy.com/v1
+  description: Australia data center
+- url: https://api-ca.cronofy.com/v1
+  description: Canada data center
+- url: https://api-sg.cronofy.com/v1
+  description: Singapore data center
+security:
+- bearerAuth: []
+tags:
+- name: Availability
+  description: Availability queries and hosted real-time scheduling.
+paths:
+  /availability:
+    post:
+      operationId: availabilityQuery
+      tags:
+      - Availability
+      summary: Availability query
+      description: Inspects the calendars of the specified participants and resources to determine common available times within the requested periods.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvailabilityRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /sequenced_availability:
+    post:
+      operationId: sequencedAvailability
+      tags:
+      - Availability
+      summary: Sequenced availability query
+      description: Determines available times for a sequence of dependent events, honoring ordering and gap constraints between them.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /real_time_scheduling:
+    post:
+      operationId: realTimeScheduling
+      tags:
+      - Availability
+      summary: Real-time scheduling
+      description: Returns a URL to a hosted scheduling page where an invitee selects a preferred time from live availability; the resulting event is written into the host's calendar.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RealTimeSchedulingRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealTimeSchedulingResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /real_time_sequencing:
+    post:
+      operationId: realTimeSequencing
+      tags:
+      - Availability
+      summary: Real-time sequencing
+      description: Returns a URL to a hosted page for selecting times across a sequence of related events backed by live availability.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+components:
+  schemas:
+    AvailabilityResponse:
+      type: object
+      properties:
+        available_periods:
+          type: array
+          items:
+            type: object
+            properties:
+              start:
+                type: string
+              end:
+                type: string
+              participants:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sub:
+                      type: string
+    RealTimeSchedulingRequest:
+      type: object
+      required:
+      - oauth
+      - event
+      - availability
+      - target_calendars
+      properties:
+        oauth:
+          type: object
+          properties:
+            redirect_uri:
+              type: string
+              format: uri
+        event:
+          $ref: '#/components/schemas/UpsertEventRequest'
+        availability:
+          $ref: '#/components/schemas/AvailabilityRequest'
+        target_calendars:
+          type: array
+          items:
+            type: object
+            properties:
+              sub:
+                type: string
+              calendar_id:
+                type: string
+    UpsertEventRequest:
+      type: object
+      required:
+      - event_id
+      - summary
+      - start
+      - end
+      properties:
+        event_id:
+          type: string
+          description: A caller-supplied identifier used to create or update the event idempotently.
+        summary:
+          type: string
+        description:
+          type: string
+        start:
+          type: string
+          description: An RFC 3339 timestamp or a date for all-day events.
+        end:
+          type: string
+        tzid:
+          type: string
+        location:
+          type: object
+          properties:
+            description:
+              type: string
+        attendees:
+          type: object
+          properties:
+            invite:
+              type: array
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    format: email
+                  display_name:
+                    type: string
+        transparency:
+          type: string
+          enum:
+          - opaque
+          - transparent
+    RealTimeSchedulingResponse:
+      type: object
+      properties:
+        real_time_scheduling:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The hosted scheduling page URL to present to the invitee.
+            status:
+              type: string
+    AvailabilityRequest:
+      type: object
+      required:
+      - participants
+      - required_duration
+      - available_periods
+      properties:
+        participants:
+          type: array
+          items:
+            type: object
+            properties:
+              members:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sub:
+                      type: string
+                      description: The account identifier of a participant.
+              required:
+                oneOf:
+                - type: string
+                - type: integer
+        required_duration:
+          type: object
+          properties:
+            minutes:
+              type: integer
+        available_periods:
+          type: array
+          items:
+            type: object
+            properties:
+              start:
+                type: string
+              end:
+                type: string
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
+  responses:
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 access token passed as an Authorization Bearer header.

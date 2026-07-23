@@ -1,0 +1,154 @@
+openapi: 3.0.1
+info:
+  title: Cronofy Availability Push Notifications API
+  description: The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.
+  termsOfService: https://www.cronofy.com/legal/terms
+  contact:
+    name: Cronofy Support
+    url: https://docs.cronofy.com/developers/
+    email: support@cronofy.com
+  version: '1.0'
+servers:
+- url: https://api.cronofy.com/v1
+  description: United States data center (default)
+- url: https://api-uk.cronofy.com/v1
+  description: United Kingdom data center
+- url: https://api-de.cronofy.com/v1
+  description: Germany data center
+- url: https://api-au.cronofy.com/v1
+  description: Australia data center
+- url: https://api-ca.cronofy.com/v1
+  description: Canada data center
+- url: https://api-sg.cronofy.com/v1
+  description: Singapore data center
+security:
+- bearerAuth: []
+tags:
+- name: Push Notifications
+  description: Notification channels for real-time calendar changes.
+paths:
+  /channels:
+    post:
+      operationId: createChannel
+      tags:
+      - Push Notifications
+      summary: Create notification channel
+      description: Creates a push notification channel; Cronofy will POST a notification to the supplied callback_url when changes occur in the user's calendars.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateChannelRequest'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelWrapper'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+    get:
+      operationId: listChannels
+      tags:
+      - Push Notifications
+      summary: List notification channels
+      description: Returns all of the authenticated user's open notification channels.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /channels/{channel_id}:
+    delete:
+      operationId: closeChannel
+      tags:
+      - Push Notifications
+      summary: Close notification channel
+      description: Closes an existing push notification channel so that no further notifications are sent.
+      parameters:
+      - name: channel_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    ChannelList:
+      type: object
+      properties:
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Channel'
+    CreateChannelRequest:
+      type: object
+      required:
+      - callback_url
+      properties:
+        callback_url:
+          type: string
+          format: uri
+          description: The HTTPS URL Cronofy will POST notifications to when calendars change.
+        filters:
+          type: object
+          properties:
+            calendar_ids:
+              type: array
+              items:
+                type: string
+            only_managed:
+              type: boolean
+    ChannelWrapper:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/Channel'
+    Channel:
+      type: object
+      properties:
+        channel_id:
+          type: string
+        callback_url:
+          type: string
+          format: uri
+        filters:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 access token passed as an Authorization Bearer header.
