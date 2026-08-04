@@ -1,0 +1,22 @@
+{
+  "provider": "cronofy",
+  "sources": [
+    "cronofy-availability-api-openapi.yml",
+    "cronofy-calendars-api-openapi.yml",
+    "cronofy-events-api-openapi.yml",
+    "cronofy-push-notifications-api-openapi.yml",
+    "cronofy-smart-invites-api-openapi.yml"
+  ],
+  "outputs": [
+    "cronofy-availability-api-openapi.yml",
+    "cronofy-calendars-api-openapi.yml",
+    "cronofy-events-api-openapi.yml",
+    "cronofy-push-notifications-api-openapi.yml",
+    "cronofy-smart-invites-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
