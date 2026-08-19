@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cronofy Availability Smart Invites API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Smart Invites",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get smart invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/smart_invites",
+            "params": [
+              {
+                "name": "smart_invite_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "recipient_email",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves the current state of a Smart Invite, including each recipient's RSVP status."
+        },
+        {
+          "info": {
+            "name": "Create or update smart invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/smart_invites",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates a Smart Invite for a recipient. Set method to \"cancel\" to cancel a previously sent invite. No calendar authorization of the recipient is required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cronofy Availability Push Notifications API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Push Notifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List notification channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/channels"
+          },
+          "docs": "Returns all of the authenticated user's open notification channels."
+        },
+        {
+          "info": {
+            "name": "Create notification channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/channels",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a push notification channel; Cronofy will POST a notification to the supplied callback_url when changes occur in the user's calendars."
+        },
+        {
+          "info": {
+            "name": "Close notification channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.cronofy.com/v1/channels/:channel_id",
+            "params": [
+              {
+                "name": "channel_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Closes an existing push notification channel so that no further notifications are sent."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

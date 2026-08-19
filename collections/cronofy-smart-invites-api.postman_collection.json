@@ -1,0 +1,393 @@
+{
+  "item": [
+    {
+      "id": "3e0470ed-eaef-47f3-96e8-0e4f58ffbf3c",
+      "name": "Smart Invites",
+      "description": {
+        "content": "Calendar invites tracked without calendar authorization.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e272e1b4-ad28-4767-bff4-2773fd23f678",
+          "name": "Create or update smart invite",
+          "request": {
+            "name": "Create or update smart invite",
+            "description": {
+              "content": "Creates or updates a Smart Invite for a recipient. Set method to \"cancel\" to cancel a previously sent invite. No calendar authorization of the recipient is required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "smart_invites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"smart_invite_id\": \"<string>\",\n  \"callback_url\": \"<uri>\",\n  \"recipient\": {\n    \"email\": \"<email>\"\n  },\n  \"event\": {\n    \"event_id\": \"<string>\",\n    \"summary\": \"<string>\",\n    \"start\": \"<string>\",\n    \"end\": \"<string>\",\n    \"description\": \"<string>\",\n    \"tzid\": \"<string>\",\n    \"location\": {\n      \"description\": \"<string>\"\n    },\n    \"attendees\": {\n      \"invite\": [\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        },\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        }\n      ]\n    },\n    \"transparency\": \"<string>\"\n  },\n  \"method\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8dbb607e-f72f-4944-9723-c344c2a6135e",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smart_invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"smart_invite_id\": \"<string>\",\n  \"callback_url\": \"<uri>\",\n  \"recipient\": {\n    \"email\": \"<email>\"\n  },\n  \"event\": {\n    \"event_id\": \"<string>\",\n    \"summary\": \"<string>\",\n    \"start\": \"<string>\",\n    \"end\": \"<string>\",\n    \"description\": \"<string>\",\n    \"tzid\": \"<string>\",\n    \"location\": {\n      \"description\": \"<string>\"\n    },\n    \"attendees\": {\n      \"invite\": [\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        },\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        }\n      ]\n    },\n    \"transparency\": \"<string>\"\n  },\n  \"method\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"smart_invite_id\": \"string\",\n  \"callback_url\": \"http://ZSaqToIIok.ymkc6+IS2iBGmXxiK-4-WkTPPWLqFoCVpKlYckdy\",\n  \"recipient\": {\n    \"email\": \"gY70oY4WW@jMlNmcVoHncbonJcQruTLyqD.ba\",\n    \"status\": \"accepted\"\n  },\n  \"attachments\": {\n    \"icalendar\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74d46f94-05de-4cf6-8044-493548fc6dd7",
+              "name": "The access token is missing, invalid, or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smart_invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"smart_invite_id\": \"<string>\",\n  \"callback_url\": \"<uri>\",\n  \"recipient\": {\n    \"email\": \"<email>\"\n  },\n  \"event\": {\n    \"event_id\": \"<string>\",\n    \"summary\": \"<string>\",\n    \"start\": \"<string>\",\n    \"end\": \"<string>\",\n    \"description\": \"<string>\",\n    \"tzid\": \"<string>\",\n    \"location\": {\n      \"description\": \"<string>\"\n    },\n    \"attendees\": {\n      \"invite\": [\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        },\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        }\n      ]\n    },\n    \"transparency\": \"<string>\"\n  },\n  \"method\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": 7122.065684546912\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9c70584-3236-466c-b181-79e32a5fb692",
+              "name": "The request was well-formed but contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smart_invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"smart_invite_id\": \"<string>\",\n  \"callback_url\": \"<uri>\",\n  \"recipient\": {\n    \"email\": \"<email>\"\n  },\n  \"event\": {\n    \"event_id\": \"<string>\",\n    \"summary\": \"<string>\",\n    \"start\": \"<string>\",\n    \"end\": \"<string>\",\n    \"description\": \"<string>\",\n    \"tzid\": \"<string>\",\n    \"location\": {\n      \"description\": \"<string>\"\n    },\n    \"attendees\": {\n      \"invite\": [\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        },\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        }\n      ]\n    },\n    \"transparency\": \"<string>\"\n  },\n  \"method\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": 7122.065684546912\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "29120f4a-ce53-4d7a-8c2f-9e2821a0c927",
+          "name": "Get smart invite",
+          "request": {
+            "name": "Get smart invite",
+            "description": {
+              "content": "Retrieves the current state of a Smart Invite, including each recipient's RSVP status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "smart_invites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "smart_invite_id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "recipient_email",
+                  "value": "<email>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b07527e4-233d-4e92-b1fb-a6f71afb7289",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smart_invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "smart_invite_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient_email",
+                      "value": "<email>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"smart_invite_id\": \"string\",\n  \"callback_url\": \"http://ZSaqToIIok.ymkc6+IS2iBGmXxiK-4-WkTPPWLqFoCVpKlYckdy\",\n  \"recipient\": {\n    \"email\": \"gY70oY4WW@jMlNmcVoHncbonJcQruTLyqD.ba\",\n    \"status\": \"accepted\"\n  },\n  \"attachments\": {\n    \"icalendar\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1a088b1-3804-46ea-90de-97f9ba5620f6",
+              "name": "The access token is missing, invalid, or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "smart_invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "smart_invite_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient_email",
+                      "value": "<email>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": 7122.065684546912\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.cronofy.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "49885d52-bcba-4437-afe4-dfeeb5c50074",
+    "name": "Cronofy Availability Smart Invites API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.\n\nContact Support:\n Name: Cronofy Support\n Email: support@cronofy.com",
+      "type": "text/plain"
+    }
+  }
+}

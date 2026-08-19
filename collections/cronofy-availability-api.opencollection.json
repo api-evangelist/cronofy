@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cronofy Availability API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Availability",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Availability query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/availability",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Inspects the calendars of the specified participants and resources to determine common available times within the requested periods."
+        },
+        {
+          "info": {
+            "name": "Sequenced availability query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/sequenced_availability",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Determines available times for a sequence of dependent events, honoring ordering and gap constraints between them."
+        },
+        {
+          "info": {
+            "name": "Real-time scheduling",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/real_time_scheduling",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a URL to a hosted scheduling page where an invitee selects a preferred time from live availability; the resulting event is written into the host's calendar."
+        },
+        {
+          "info": {
+            "name": "Real-time sequencing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/real_time_sequencing",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a URL to a hosted page for selecting times across a sequence of related events backed by live availability."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

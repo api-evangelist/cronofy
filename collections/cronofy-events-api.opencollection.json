@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cronofy Availability Events API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Read events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/events",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The minimum date (inclusive) from which to return events."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "The maximum date (exclusive) up to which to return events."
+              },
+              {
+                "name": "tzid",
+                "value": "",
+                "type": "query",
+                "description": "The time zone id used to interpret and return event times, e.g. Etc/UTC."
+              },
+              {
+                "name": "calendar_ids[]",
+                "value": "",
+                "type": "query",
+                "description": "Restrict results to the given calendar ids."
+              },
+              {
+                "name": "last_modified",
+                "value": "",
+                "type": "query",
+                "description": "Only return events modified since this timestamp."
+              }
+            ]
+          },
+          "docs": "Returns a paged list of events across all of a user's connected calendars within the requested period."
+        },
+        {
+          "info": {
+            "name": "Free/busy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/free_busy",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tzid",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "calendar_ids[]",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns free/busy information across all of a user's connected calendars without exposing event detail."
+        },
+        {
+          "info": {
+            "name": "Create or update event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/calendars/:calendar_id/events",
+            "params": [
+              {
+                "name": "calendar_id",
+                "value": "",
+                "type": "path",
+                "description": "The Cronofy id of the target calendar."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates an event within the specified calendar, keyed on the caller-supplied event_id."
+        },
+        {
+          "info": {
+            "name": "Delete event",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.cronofy.com/v1/calendars/:calendar_id/events",
+            "params": [
+              {
+                "name": "calendar_id",
+                "value": "",
+                "type": "path",
+                "description": "The Cronofy id of the target calendar."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes an event, identified by event_id, from the specified calendar."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,913 @@
+{
+  "item": [
+    {
+      "id": "b65eb9b5-1563-44f7-a685-34418119a644",
+      "name": "Events",
+      "description": {
+        "content": "Reading, creating, updating, and deleting events plus free/busy.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "877b953a-599c-4802-8012-b397cfa89771",
+          "name": "Read events",
+          "request": {
+            "name": "Read events",
+            "description": {
+              "content": "Returns a paged list of events across all of a user's connected calendars within the requested period.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "The minimum date (inclusive) from which to return events."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "The maximum date (exclusive) up to which to return events."
+                },
+                {
+                  "disabled": false,
+                  "key": "tzid",
+                  "value": "<string>",
+                  "description": "(Required) The time zone id used to interpret and return event times, e.g. Etc/UTC."
+                },
+                {
+                  "disabled": false,
+                  "key": "calendar_ids[]",
+                  "value": "<string>",
+                  "description": "Restrict results to the given calendar ids."
+                },
+                {
+                  "disabled": false,
+                  "key": "calendar_ids[]",
+                  "value": "<string>",
+                  "description": "Restrict results to the given calendar ids."
+                },
+                {
+                  "disabled": false,
+                  "key": "last_modified",
+                  "value": "<dateTime>",
+                  "description": "Only return events modified since this timestamp."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e53fa5b8-4352-48a6-8fbd-0986a5797d17",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "tzid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "calendar_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "calendar_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_modified",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pages\": {\n    \"current\": 9510,\n    \"total\": 7655,\n    \"next_page\": \"string\"\n  },\n  \"events\": [\n    {\n      \"calendar_id\": \"string\",\n      \"event_uid\": \"string\",\n      \"summary\": \"string\",\n      \"description\": \"string\",\n      \"start\": \"string\",\n      \"end\": \"string\",\n      \"location\": {\n        \"description\": \"string\"\n      },\n      \"deleted\": true,\n      \"free_busy_status\": \"free\",\n      \"attendees\": [\n        {\n          \"email\": \"yx6XurM3Z2ZH7uI@UBKzKq.pw\",\n          \"display_name\": \"string\",\n          \"status\": \"needs_action\"\n        },\n        {\n          \"email\": \"ljrFufE@BzkBjqiWVOzjBYWFnVIDqTpRmf.cpvo\",\n          \"display_name\": \"string\",\n          \"status\": \"accepted\"\n        }\n      ]\n    },\n    {\n      \"calendar_id\": \"string\",\n      \"event_uid\": \"string\",\n      \"summary\": \"string\",\n      \"description\": \"string\",\n      \"start\": \"string\",\n      \"end\": \"string\",\n      \"location\": {\n        \"description\": \"string\"\n      },\n      \"deleted\": false,\n      \"free_busy_status\": \"tentative\",\n      \"attendees\": [\n        {\n          \"email\": \"L5xQJ-Tz2iW@LQElVBjYoTPzlteDsMgOffxudFRG.jvp\",\n          \"display_name\": \"string\",\n          \"status\": \"tentative\"\n        },\n        {\n          \"email\": \"To5KWTAtYSN@REHpKT.fid\",\n          \"display_name\": \"string\",\n          \"status\": \"accepted\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4244ea48-4d6d-471b-9fd8-9771c8d84649",
+              "name": "The access token is missing, invalid, or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "tzid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "calendar_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "calendar_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "last_modified",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a1b9956-2cd2-484d-aa3f-793d966e3425",
+          "name": "Free/busy",
+          "request": {
+            "name": "Free/busy",
+            "description": {
+              "content": "Returns free/busy information across all of a user's connected calendars without exposing event detail.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "free_busy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "tzid",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "calendar_ids[]",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "calendar_ids[]",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "53dcfeeb-47d2-4dad-9acf-84ee9b9c7d73",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "free_busy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "tzid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "calendar_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "calendar_ids[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pages\": {\n    \"current\": 5895,\n    \"total\": 910,\n    \"next_page\": \"string\"\n  },\n  \"free_busy\": [\n    {\n      \"calendar_id\": \"string\",\n      \"start\": \"string\",\n      \"end\": \"string\",\n      \"free_busy_status\": \"busy\"\n    },\n    {\n      \"calendar_id\": \"string\",\n      \"start\": \"string\",\n      \"end\": \"string\",\n      \"free_busy_status\": \"free\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a1a3075-baf2-456c-bee8-19203a07dd74",
+              "name": "The access token is missing, invalid, or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "free_busy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "tzid",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "calendar_ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "calendar_ids[]",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3c6ce8d-a204-46af-af3f-181c89d20071",
+          "name": "Create or update event",
+          "request": {
+            "name": "Create or update event",
+            "description": {
+              "content": "Creates or updates an event within the specified calendar, keyed on the caller-supplied event_id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calendars",
+                ":calendar_id",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "calendar_id",
+                  "description": "(Required) The Cronofy id of the target calendar."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_id\": \"<string>\",\n  \"summary\": \"<string>\",\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tzid\": \"<string>\",\n  \"location\": {\n    \"description\": \"<string>\"\n  },\n  \"attendees\": {\n    \"invite\": [\n      {\n        \"email\": \"<email>\",\n        \"display_name\": \"<string>\"\n      },\n      {\n        \"email\": \"<email>\",\n        \"display_name\": \"<string>\"\n      }\n    ]\n  },\n  \"transparency\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3aad1fea-301a-4abc-86ac-472fa6bd0ac2",
+              "name": "Accepted - the event has been queued for creation or update.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendars",
+                    ":calendar_id",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "calendar_id",
+                      "description": "(Required) The Cronofy id of the target calendar."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_id\": \"<string>\",\n  \"summary\": \"<string>\",\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tzid\": \"<string>\",\n  \"location\": {\n    \"description\": \"<string>\"\n  },\n  \"attendees\": {\n    \"invite\": [\n      {\n        \"email\": \"<email>\",\n        \"display_name\": \"<string>\"\n      },\n      {\n        \"email\": \"<email>\",\n        \"display_name\": \"<string>\"\n      }\n    ]\n  },\n  \"transparency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2d474e34-7232-48dc-a189-eaf4e7c95d09",
+              "name": "The access token is missing, invalid, or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendars",
+                    ":calendar_id",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "calendar_id",
+                      "description": "(Required) The Cronofy id of the target calendar."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_id\": \"<string>\",\n  \"summary\": \"<string>\",\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tzid\": \"<string>\",\n  \"location\": {\n    \"description\": \"<string>\"\n  },\n  \"attendees\": {\n    \"invite\": [\n      {\n        \"email\": \"<email>\",\n        \"display_name\": \"<string>\"\n      },\n      {\n        \"email\": \"<email>\",\n        \"display_name\": \"<string>\"\n      }\n    ]\n  },\n  \"transparency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f15b5834-57f1-42a1-b1c5-ee6299b31ce4",
+              "name": "The request was well-formed but contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendars",
+                    ":calendar_id",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "calendar_id",
+                      "description": "(Required) The Cronofy id of the target calendar."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_id\": \"<string>\",\n  \"summary\": \"<string>\",\n  \"start\": \"<string>\",\n  \"end\": \"<string>\",\n  \"description\": \"<string>\",\n  \"tzid\": \"<string>\",\n  \"location\": {\n    \"description\": \"<string>\"\n  },\n  \"attendees\": {\n    \"invite\": [\n      {\n        \"email\": \"<email>\",\n        \"display_name\": \"<string>\"\n      },\n      {\n        \"email\": \"<email>\",\n        \"display_name\": \"<string>\"\n      }\n    ]\n  },\n  \"transparency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1109fa91-8e96-42c4-837e-c3a6d28ec7e1",
+          "name": "Delete event",
+          "request": {
+            "name": "Delete event",
+            "description": {
+              "content": "Deletes an event, identified by event_id, from the specified calendar.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calendars",
+                ":calendar_id",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "calendar_id",
+                  "description": "(Required) The Cronofy id of the target calendar."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "73ad278c-4119-46f9-b11e-5a96f0abfd66",
+              "name": "Accepted - the event has been queued for deletion.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendars",
+                    ":calendar_id",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "calendar_id",
+                      "description": "(Required) The Cronofy id of the target calendar."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9caeca33-c25e-4385-99c2-00f62b09e40d",
+              "name": "The access token is missing, invalid, or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendars",
+                    ":calendar_id",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "calendar_id",
+                      "description": "(Required) The Cronofy id of the target calendar."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c9aa3b2-8f61-44b4-85f4-ddc1e1ea63e8",
+              "name": "The request was well-formed but contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calendars",
+                    ":calendar_id",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "calendar_id",
+                      "description": "(Required) The Cronofy id of the target calendar."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.cronofy.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e644be49-354c-4a8a-88b6-73d7f52dc88d",
+    "name": "Cronofy Availability Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.\n\nContact Support:\n Name: Cronofy Support\n Email: support@cronofy.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Cronofy Availability Calendars API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Calendars",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Account identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/userinfo"
+          },
+          "docs": "Returns identity and profile information for the authenticated account, including connected calendar profiles."
+        },
+        {
+          "info": {
+            "name": "List calendars",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.cronofy.com/v1/calendars"
+          },
+          "docs": "Returns the list of calendars the authenticated user has connected across all linked calendar profiles."
+        },
+        {
+          "info": {
+            "name": "Create calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.cronofy.com/v1/calendars",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new calendar within a connected calendar profile."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

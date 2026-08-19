@@ -1,0 +1,837 @@
+{
+  "item": [
+    {
+      "id": "b7d6e0c1-03c8-4730-8d7e-dd9fe5d59bbf",
+      "name": "Availability",
+      "description": {
+        "content": "Availability queries and hosted real-time scheduling.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c80f2ce0-80d0-43b0-a6a3-4a8765bdc2cf",
+          "name": "Availability query",
+          "request": {
+            "name": "Availability query",
+            "description": {
+              "content": "Inspects the calendars of the specified participants and resources to determine common available times within the requested periods.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "availability"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participants\": [\n    {\n      \"members\": [\n        {\n          \"sub\": \"<string>\"\n        },\n        {\n          \"sub\": \"<string>\"\n        }\n      ],\n      \"required\": \"<string>\"\n    },\n    {\n      \"members\": [\n        {\n          \"sub\": \"<string>\"\n        },\n        {\n          \"sub\": \"<string>\"\n        }\n      ],\n      \"required\": \"<string>\"\n    }\n  ],\n  \"required_duration\": {\n    \"minutes\": \"<integer>\"\n  },\n  \"available_periods\": [\n    {\n      \"start\": \"<string>\",\n      \"end\": \"<string>\"\n    },\n    {\n      \"start\": \"<string>\",\n      \"end\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "882af6d1-c8a0-4572-a3f6-4b7b3994ccc7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"participants\": [\n    {\n      \"members\": [\n        {\n          \"sub\": \"<string>\"\n        },\n        {\n          \"sub\": \"<string>\"\n        }\n      ],\n      \"required\": \"<string>\"\n    },\n    {\n      \"members\": [\n        {\n          \"sub\": \"<string>\"\n        },\n        {\n          \"sub\": \"<string>\"\n        }\n      ],\n      \"required\": \"<string>\"\n    }\n  ],\n  \"required_duration\": {\n    \"minutes\": \"<integer>\"\n  },\n  \"available_periods\": [\n    {\n      \"start\": \"<string>\",\n      \"end\": \"<string>\"\n    },\n    {\n      \"start\": \"<string>\",\n      \"end\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"available_periods\": [\n    {\n      \"start\": \"string\",\n      \"end\": \"string\",\n      \"participants\": [\n        {\n          \"sub\": \"string\"\n        },\n        {\n          \"sub\": \"string\"\n        }\n      ]\n    },\n    {\n      \"start\": \"string\",\n      \"end\": \"string\",\n      \"participants\": [\n        {\n          \"sub\": \"string\"\n        },\n        {\n          \"sub\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "418a58f1-633c-4ca6-9722-732417539fbf",
+              "name": "The access token is missing, invalid, or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"participants\": [\n    {\n      \"members\": [\n        {\n          \"sub\": \"<string>\"\n        },\n        {\n          \"sub\": \"<string>\"\n        }\n      ],\n      \"required\": \"<string>\"\n    },\n    {\n      \"members\": [\n        {\n          \"sub\": \"<string>\"\n        },\n        {\n          \"sub\": \"<string>\"\n        }\n      ],\n      \"required\": \"<string>\"\n    }\n  ],\n  \"required_duration\": {\n    \"minutes\": \"<integer>\"\n  },\n  \"available_periods\": [\n    {\n      \"start\": \"<string>\",\n      \"end\": \"<string>\"\n    },\n    {\n      \"start\": \"<string>\",\n      \"end\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6898\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5be2be0b-8090-4075-94cf-601be258e973",
+              "name": "The request was well-formed but contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"participants\": [\n    {\n      \"members\": [\n        {\n          \"sub\": \"<string>\"\n        },\n        {\n          \"sub\": \"<string>\"\n        }\n      ],\n      \"required\": \"<string>\"\n    },\n    {\n      \"members\": [\n        {\n          \"sub\": \"<string>\"\n        },\n        {\n          \"sub\": \"<string>\"\n        }\n      ],\n      \"required\": \"<string>\"\n    }\n  ],\n  \"required_duration\": {\n    \"minutes\": \"<integer>\"\n  },\n  \"available_periods\": [\n    {\n      \"start\": \"<string>\",\n      \"end\": \"<string>\"\n    },\n    {\n      \"start\": \"<string>\",\n      \"end\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6898\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b205c45f-4a7e-4b8e-b89c-0109cf7caaa6",
+          "name": "Sequenced availability query",
+          "request": {
+            "name": "Sequenced availability query",
+            "description": {
+              "content": "Determines available times for a sequence of dependent events, honoring ordering and gap constraints between them.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sequenced_availability"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74ef2a91-6140-432c-bca2-01b759413030",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sequenced_availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "24242bac-2e1f-4b87-8689-0b0370a3901b",
+              "name": "The access token is missing, invalid, or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sequenced_availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6898\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10c0e374-a27d-44e0-88ce-54aa5c518897",
+              "name": "The request was well-formed but contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sequenced_availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6898\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a2d9fdd9-af2a-496c-b57f-1b2a053e0f77",
+          "name": "Real-time scheduling",
+          "request": {
+            "name": "Real-time scheduling",
+            "description": {
+              "content": "Returns a URL to a hosted scheduling page where an invitee selects a preferred time from live availability; the resulting event is written into the host's calendar.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "real_time_scheduling"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oauth\": {\n    \"redirect_uri\": \"<uri>\"\n  },\n  \"event\": {\n    \"event_id\": \"<string>\",\n    \"summary\": \"<string>\",\n    \"start\": \"<string>\",\n    \"end\": \"<string>\",\n    \"description\": \"<string>\",\n    \"tzid\": \"<string>\",\n    \"location\": {\n      \"description\": \"<string>\"\n    },\n    \"attendees\": {\n      \"invite\": [\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        },\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        }\n      ]\n    },\n    \"transparency\": \"<string>\"\n  },\n  \"availability\": {\n    \"participants\": [\n      {\n        \"members\": [\n          {\n            \"sub\": \"<string>\"\n          },\n          {\n            \"sub\": \"<string>\"\n          }\n        ],\n        \"required\": \"<string>\"\n      },\n      {\n        \"members\": [\n          {\n            \"sub\": \"<string>\"\n          },\n          {\n            \"sub\": \"<string>\"\n          }\n        ],\n        \"required\": \"<string>\"\n      }\n    ],\n    \"required_duration\": {\n      \"minutes\": \"<integer>\"\n    },\n    \"available_periods\": [\n      {\n        \"start\": \"<string>\",\n        \"end\": \"<string>\"\n      },\n      {\n        \"start\": \"<string>\",\n        \"end\": \"<string>\"\n      }\n    ]\n  },\n  \"target_calendars\": [\n    {\n      \"sub\": \"<string>\",\n      \"calendar_id\": \"<string>\"\n    },\n    {\n      \"sub\": \"<string>\",\n      \"calendar_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5d589f74-8b8d-43a1-8bc3-0d98bba9d466",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "real_time_scheduling"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"oauth\": {\n    \"redirect_uri\": \"<uri>\"\n  },\n  \"event\": {\n    \"event_id\": \"<string>\",\n    \"summary\": \"<string>\",\n    \"start\": \"<string>\",\n    \"end\": \"<string>\",\n    \"description\": \"<string>\",\n    \"tzid\": \"<string>\",\n    \"location\": {\n      \"description\": \"<string>\"\n    },\n    \"attendees\": {\n      \"invite\": [\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        },\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        }\n      ]\n    },\n    \"transparency\": \"<string>\"\n  },\n  \"availability\": {\n    \"participants\": [\n      {\n        \"members\": [\n          {\n            \"sub\": \"<string>\"\n          },\n          {\n            \"sub\": \"<string>\"\n          }\n        ],\n        \"required\": \"<string>\"\n      },\n      {\n        \"members\": [\n          {\n            \"sub\": \"<string>\"\n          },\n          {\n            \"sub\": \"<string>\"\n          }\n        ],\n        \"required\": \"<string>\"\n      }\n    ],\n    \"required_duration\": {\n      \"minutes\": \"<integer>\"\n    },\n    \"available_periods\": [\n      {\n        \"start\": \"<string>\",\n        \"end\": \"<string>\"\n      },\n      {\n        \"start\": \"<string>\",\n        \"end\": \"<string>\"\n      }\n    ]\n  },\n  \"target_calendars\": [\n    {\n      \"sub\": \"<string>\",\n      \"calendar_id\": \"<string>\"\n    },\n    {\n      \"sub\": \"<string>\",\n      \"calendar_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"real_time_scheduling\": {\n    \"url\": \"https://nNnMcqLhiQqS.zxfFz2fSVP03KJyjn,O4-Re-GS+EcKhmm,r\",\n    \"status\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd15e43f-0638-44b0-9bdc-d99a591d4013",
+              "name": "The access token is missing, invalid, or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "real_time_scheduling"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"oauth\": {\n    \"redirect_uri\": \"<uri>\"\n  },\n  \"event\": {\n    \"event_id\": \"<string>\",\n    \"summary\": \"<string>\",\n    \"start\": \"<string>\",\n    \"end\": \"<string>\",\n    \"description\": \"<string>\",\n    \"tzid\": \"<string>\",\n    \"location\": {\n      \"description\": \"<string>\"\n    },\n    \"attendees\": {\n      \"invite\": [\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        },\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        }\n      ]\n    },\n    \"transparency\": \"<string>\"\n  },\n  \"availability\": {\n    \"participants\": [\n      {\n        \"members\": [\n          {\n            \"sub\": \"<string>\"\n          },\n          {\n            \"sub\": \"<string>\"\n          }\n        ],\n        \"required\": \"<string>\"\n      },\n      {\n        \"members\": [\n          {\n            \"sub\": \"<string>\"\n          },\n          {\n            \"sub\": \"<string>\"\n          }\n        ],\n        \"required\": \"<string>\"\n      }\n    ],\n    \"required_duration\": {\n      \"minutes\": \"<integer>\"\n    },\n    \"available_periods\": [\n      {\n        \"start\": \"<string>\",\n        \"end\": \"<string>\"\n      },\n      {\n        \"start\": \"<string>\",\n        \"end\": \"<string>\"\n      }\n    ]\n  },\n  \"target_calendars\": [\n    {\n      \"sub\": \"<string>\",\n      \"calendar_id\": \"<string>\"\n    },\n    {\n      \"sub\": \"<string>\",\n      \"calendar_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6898\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccbc403b-999a-4cef-86f9-769323e15ed6",
+              "name": "The request was well-formed but contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "real_time_scheduling"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"oauth\": {\n    \"redirect_uri\": \"<uri>\"\n  },\n  \"event\": {\n    \"event_id\": \"<string>\",\n    \"summary\": \"<string>\",\n    \"start\": \"<string>\",\n    \"end\": \"<string>\",\n    \"description\": \"<string>\",\n    \"tzid\": \"<string>\",\n    \"location\": {\n      \"description\": \"<string>\"\n    },\n    \"attendees\": {\n      \"invite\": [\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        },\n        {\n          \"email\": \"<email>\",\n          \"display_name\": \"<string>\"\n        }\n      ]\n    },\n    \"transparency\": \"<string>\"\n  },\n  \"availability\": {\n    \"participants\": [\n      {\n        \"members\": [\n          {\n            \"sub\": \"<string>\"\n          },\n          {\n            \"sub\": \"<string>\"\n          }\n        ],\n        \"required\": \"<string>\"\n      },\n      {\n        \"members\": [\n          {\n            \"sub\": \"<string>\"\n          },\n          {\n            \"sub\": \"<string>\"\n          }\n        ],\n        \"required\": \"<string>\"\n      }\n    ],\n    \"required_duration\": {\n      \"minutes\": \"<integer>\"\n    },\n    \"available_periods\": [\n      {\n        \"start\": \"<string>\",\n        \"end\": \"<string>\"\n      },\n      {\n        \"start\": \"<string>\",\n        \"end\": \"<string>\"\n      }\n    ]\n  },\n  \"target_calendars\": [\n    {\n      \"sub\": \"<string>\",\n      \"calendar_id\": \"<string>\"\n    },\n    {\n      \"sub\": \"<string>\",\n      \"calendar_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6898\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8cd226c7-4c80-44be-bb95-8c8c4e0acbce",
+          "name": "Real-time sequencing",
+          "request": {
+            "name": "Real-time sequencing",
+            "description": {
+              "content": "Returns a URL to a hosted page for selecting times across a sequence of related events backed by live availability.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "real_time_sequencing"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ad9bca01-2bf5-40f7-8b7f-aab7d28fab66",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "real_time_sequencing"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "916400a8-8d42-4c43-b0bb-34a1f1a15708",
+              "name": "The access token is missing, invalid, or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "real_time_sequencing"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6898\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fb52d4b-65b8-4848-b791-33d3b6c2e24c",
+              "name": "The request was well-formed but contained invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "real_time_sequencing"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": {\n    \"key_0\": \"string\",\n    \"key_1\": 6898\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.cronofy.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "927d075f-e542-448d-9515-50c73c5866e1",
+    "name": "Cronofy Availability API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.\n\nContact Support:\n Name: Cronofy Support\n Email: support@cronofy.com",
+      "type": "text/plain"
+    }
+  }
+}
