@@ -113,6 +113,8 @@ apis:
   humanURL: https://docs.cronofy.com/developers/api/calendars/
   baseURL: https://api.cronofy.com/v1
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
