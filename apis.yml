@@ -7,6 +7,18 @@ description: Cronofy is a scheduling and calendar API platform that provides a u
   Its REST API powers two-way calendar sync, real-time availability and scheduling,
   smart invites, scheduling links, and push notifications for software teams embedding
   scheduling into their products.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
