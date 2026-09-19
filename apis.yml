@@ -88,6 +88,8 @@ apis:
   humanURL: https://docs.cronofy.com/developers/api/calendars/
   baseURL: https://api.cronofy.com/v1
   tags:
+  - Calendar
+  tags_raw:
   - Calendars
   properties:
   - type: OpenAPI
