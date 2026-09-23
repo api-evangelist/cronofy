@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Cronofy Availability Smart Invites API
+  title: Cronofy Smart Invites API
   description: The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.
   termsOfService: https://www.cronofy.com/legal/terms
   contact:
@@ -78,74 +78,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: The access token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: The request was well-formed but contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    SmartInviteResponse:
-      type: object
-      properties:
-        smart_invite_id:
-          type: string
-        callback_url:
-          type: string
-          format: uri
-        recipient:
-          type: object
-          properties:
-            email:
-              type: string
-              format: email
-            status:
-              type: string
-              enum:
-              - pending
-              - accepted
-              - declined
-              - tentative
-        attachments:
-          type: object
-          properties:
-            icalendar:
-              type: string
-              description: The iCalendar (.ics) attachment representing the invite.
-    SmartInviteRequest:
-      type: object
-      required:
-      - smart_invite_id
-      - callback_url
-      - recipient
-      - event
-      properties:
-        method:
-          type: string
-          enum:
-          - request
-          - cancel
-          description: Use "cancel" to cancel a previously sent invite.
-        smart_invite_id:
-          type: string
-        callback_url:
-          type: string
-          format: uri
-        recipient:
-          type: object
-          properties:
-            email:
-              type: string
-              format: email
-        event:
-          $ref: '#/components/schemas/UpsertEventRequest'
     UpsertEventRequest:
       type: object
       required:
@@ -191,6 +124,33 @@ components:
           enum:
           - opaque
           - transparent
+    SmartInviteResponse:
+      type: object
+      properties:
+        smart_invite_id:
+          type: string
+        callback_url:
+          type: string
+          format: uri
+        recipient:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            status:
+              type: string
+              enum:
+              - pending
+              - accepted
+              - declined
+              - tentative
+        attachments:
+          type: object
+          properties:
+            icalendar:
+              type: string
+              description: The iCalendar (.ics) attachment representing the invite.
     Error:
       type: object
       properties:
@@ -198,6 +158,46 @@ components:
           type: object
           additionalProperties: true
           description: A map of field names to arrays of error descriptions.
+    SmartInviteRequest:
+      type: object
+      required:
+      - smart_invite_id
+      - callback_url
+      - recipient
+      - event
+      properties:
+        method:
+          type: string
+          enum:
+          - request
+          - cancel
+          description: Use "cancel" to cancel a previously sent invite.
+        smart_invite_id:
+          type: string
+        callback_url:
+          type: string
+          format: uri
+        recipient:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+        event:
+          $ref: '#/components/schemas/UpsertEventRequest'
+  responses:
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

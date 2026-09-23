@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Cronofy Availability Events API
+  title: Cronofy Events API
   description: The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.
   termsOfService: https://www.cronofy.com/legal/terms
   contact:
@@ -158,32 +158,21 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   schemas:
-    EventList:
+    Attendee:
       type: object
       properties:
-        pages:
-          $ref: '#/components/schemas/Pages'
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-    DeleteEventRequest:
-      type: object
-      required:
-      - event_id
-      properties:
-        event_id:
+        email:
           type: string
-          description: The caller-supplied identifier of the event to delete.
-    Pages:
-      type: object
-      properties:
-        current:
-          type: integer
-        total:
-          type: integer
-        next_page:
+          format: email
+        display_name:
           type: string
+        status:
+          type: string
+          enum:
+          - needs_action
+          - accepted
+          - declined
+          - tentative
     UpsertEventRequest:
       type: object
       required:
@@ -229,21 +218,15 @@ components:
           enum:
           - opaque
           - transparent
-    Attendee:
+    EventList:
       type: object
       properties:
-        email:
-          type: string
-          format: email
-        display_name:
-          type: string
-        status:
-          type: string
-          enum:
-          - needs_action
-          - accepted
-          - declined
-          - tentative
+        pages:
+          $ref: '#/components/schemas/Pages'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
     FreeBusyList:
       type: object
       properties:
@@ -267,6 +250,15 @@ components:
                 - tentative
                 - busy
                 - unavailable
+    Pages:
+      type: object
+      properties:
+        current:
+          type: integer
+        total:
+          type: integer
+        next_page:
+          type: string
     Error:
       type: object
       properties:
@@ -308,6 +300,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attendee'
+    DeleteEventRequest:
+      type: object
+      required:
+      - event_id
+      properties:
+        event_id:
+          type: string
+          description: The caller-supplied identifier of the event to delete.
   responses:
     Unauthorized:
       description: The access token is missing, invalid, or expired.

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Cronofy Availability Calendars API
+  title: Cronofy Calendars API
   description: The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.
   termsOfService: https://www.cronofy.com/legal/terms
   contact:
@@ -83,12 +83,53 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
+  responses:
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    CalendarWrapper:
+    CalendarList:
       type: object
       properties:
-        calendar:
-          $ref: '#/components/schemas/Calendar'
+        calendars:
+          type: array
+          items:
+            $ref: '#/components/schemas/Calendar'
+    CreateCalendarRequest:
+      type: object
+      required:
+      - profile_id
+      - name
+      properties:
+        profile_id:
+          type: string
+          description: The profile within which to create the calendar.
+        name:
+          type: string
+          description: The name of the new calendar.
+        color:
+          type: string
+          description: An optional hex color for the calendar.
+    UserInfo:
+      type: object
+      properties:
+        sub:
+          type: string
+          description: The unique account identifier.
+        cronofy.type:
+          type: string
+        cronofy.data:
+          type: object
+          additionalProperties: true
     Calendar:
       type: object
       properties:
@@ -111,39 +152,11 @@ components:
           type: boolean
         permission_level:
           type: string
-    CalendarList:
+    CalendarWrapper:
       type: object
       properties:
-        calendars:
-          type: array
-          items:
-            $ref: '#/components/schemas/Calendar'
-    UserInfo:
-      type: object
-      properties:
-        sub:
-          type: string
-          description: The unique account identifier.
-        cronofy.type:
-          type: string
-        cronofy.data:
-          type: object
-          additionalProperties: true
-    CreateCalendarRequest:
-      type: object
-      required:
-      - profile_id
-      - name
-      properties:
-        profile_id:
-          type: string
-          description: The profile within which to create the calendar.
-        name:
-          type: string
-          description: The name of the new calendar.
-        color:
-          type: string
-          description: An optional hex color for the calendar.
+        calendar:
+          $ref: '#/components/schemas/Calendar'
     Error:
       type: object
       properties:
@@ -151,19 +164,6 @@ components:
           type: object
           additionalProperties: true
           description: A map of field names to arrays of error descriptions.
-  responses:
-    Unauthorized:
-      description: The access token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: The request was well-formed but contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

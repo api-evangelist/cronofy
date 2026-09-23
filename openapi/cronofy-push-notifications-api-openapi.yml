@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Cronofy Availability Push Notifications API
+  title: Cronofy Push Notifications API
   description: The Cronofy API is a REST interface for embedding scheduling and calendar functionality into applications. It provides a unified abstraction over Google Calendar, Microsoft 365 / Outlook, Exchange, and Apple iCloud, covering connected calendars, two-way event sync, free/busy and availability querying, real-time scheduling pages, smart invites, and push notification channels. All requests are authenticated with an OAuth 2.0 Bearer access token.
   termsOfService: https://www.cronofy.com/legal/terms
   contact:
@@ -99,13 +99,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    ChannelList:
-      type: object
-      properties:
-        channels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Channel'
     CreateChannelRequest:
       type: object
       required:
@@ -124,11 +117,13 @@ components:
                 type: string
             only_managed:
               type: boolean
-    ChannelWrapper:
+    Error:
       type: object
       properties:
-        channel:
-          $ref: '#/components/schemas/Channel'
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
     Channel:
       type: object
       properties:
@@ -140,13 +135,18 @@ components:
         filters:
           type: object
           additionalProperties: true
-    Error:
+    ChannelList:
       type: object
       properties:
-        errors:
-          type: object
-          additionalProperties: true
-          description: A map of field names to arrays of error descriptions.
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Channel'
+    ChannelWrapper:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/Channel'
   securitySchemes:
     bearerAuth:
       type: http
