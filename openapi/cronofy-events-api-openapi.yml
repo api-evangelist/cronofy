@@ -158,6 +158,14 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   schemas:
+    DeleteEventRequest:
+      type: object
+      required:
+      - event_id
+      properties:
+        event_id:
+          type: string
+          description: The caller-supplied identifier of the event to delete.
     Attendee:
       type: object
       properties:
@@ -173,6 +181,72 @@ components:
           - accepted
           - declined
           - tentative
+    Event:
+      type: object
+      properties:
+        calendar_id:
+          type: string
+        event_uid:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        start:
+          type: string
+          description: An RFC 3339 timestamp or a date for all-day events.
+        end:
+          type: string
+        location:
+          type: object
+          properties:
+            description:
+              type: string
+        deleted:
+          type: boolean
+        free_busy_status:
+          type: string
+          enum:
+          - free
+          - tentative
+          - busy
+          - unavailable
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attendee'
+    FreeBusyList:
+      type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Pages'
+        free_busy:
+          type: array
+          items:
+            type: object
+            properties:
+              calendar_id:
+                type: string
+              start:
+                type: string
+              end:
+                type: string
+              free_busy_status:
+                type: string
+                enum:
+                - free
+                - tentative
+                - busy
+                - unavailable
+    Pages:
+      type: object
+      properties:
+        current:
+          type: integer
+        total:
+          type: integer
+        next_page:
+          type: string
     UpsertEventRequest:
       type: object
       required:
@@ -218,6 +292,13 @@ components:
           enum:
           - opaque
           - transparent
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
     EventList:
       type: object
       properties:
@@ -227,96 +308,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Event'
-    FreeBusyList:
-      type: object
-      properties:
-        pages:
-          $ref: '#/components/schemas/Pages'
-        free_busy:
-          type: array
-          items:
-            type: object
-            properties:
-              calendar_id:
-                type: string
-              start:
-                type: string
-              end:
-                type: string
-              free_busy_status:
-                type: string
-                enum:
-                - free
-                - tentative
-                - busy
-                - unavailable
-    Pages:
-      type: object
-      properties:
-        current:
-          type: integer
-        total:
-          type: integer
-        next_page:
-          type: string
-    Error:
-      type: object
-      properties:
-        errors:
-          type: object
-          additionalProperties: true
-          description: A map of field names to arrays of error descriptions.
-    Event:
-      type: object
-      properties:
-        calendar_id:
-          type: string
-        event_uid:
-          type: string
-        summary:
-          type: string
-        description:
-          type: string
-        start:
-          type: string
-          description: An RFC 3339 timestamp or a date for all-day events.
-        end:
-          type: string
-        location:
-          type: object
-          properties:
-            description:
-              type: string
-        deleted:
-          type: boolean
-        free_busy_status:
-          type: string
-          enum:
-          - free
-          - tentative
-          - busy
-          - unavailable
-        attendees:
-          type: array
-          items:
-            $ref: '#/components/schemas/Attendee'
-    DeleteEventRequest:
-      type: object
-      required:
-      - event_id
-      properties:
-        event_id:
-          type: string
-          description: The caller-supplied identifier of the event to delete.
   responses:
-    Unauthorized:
-      description: The access token is missing, invalid, or expired.
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: The request was well-formed but contained invalid parameters.
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
       content:
         application/json:
           schema:
