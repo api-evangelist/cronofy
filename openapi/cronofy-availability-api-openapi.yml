@@ -117,25 +117,6 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   schemas:
-    AvailabilityResponse:
-      type: object
-      properties:
-        available_periods:
-          type: array
-          items:
-            type: object
-            properties:
-              start:
-                type: string
-              end:
-                type: string
-              participants:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    sub:
-                      type: string
     RealTimeSchedulingRequest:
       type: object
       required:
@@ -162,6 +143,63 @@ components:
               sub:
                 type: string
               calendar_id:
+                type: string
+    AvailabilityResponse:
+      type: object
+      properties:
+        available_periods:
+          type: array
+          items:
+            type: object
+            properties:
+              start:
+                type: string
+              end:
+                type: string
+              participants:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sub:
+                      type: string
+    AvailabilityRequest:
+      type: object
+      required:
+      - participants
+      - required_duration
+      - available_periods
+      properties:
+        participants:
+          type: array
+          items:
+            type: object
+            properties:
+              members:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sub:
+                      type: string
+                      description: The account identifier of a participant.
+              required:
+                oneOf:
+                - type: string
+                - type: integer
+        required_duration:
+          type: object
+          properties:
+            minutes:
+              type: integer
+        available_periods:
+          type: array
+          items:
+            type: object
+            properties:
+              start:
+                type: string
+              end:
                 type: string
     Error:
       type: object
@@ -215,44 +253,6 @@ components:
           enum:
           - opaque
           - transparent
-    AvailabilityRequest:
-      type: object
-      required:
-      - participants
-      - required_duration
-      - available_periods
-      properties:
-        participants:
-          type: array
-          items:
-            type: object
-            properties:
-              members:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    sub:
-                      type: string
-                      description: The account identifier of a participant.
-              required:
-                oneOf:
-                - type: string
-                - type: integer
-        required_duration:
-          type: object
-          properties:
-            minutes:
-              type: integer
-        available_periods:
-          type: array
-          items:
-            type: object
-            properties:
-              start:
-                type: string
-              end:
-                type: string
     RealTimeSchedulingResponse:
       type: object
       properties:

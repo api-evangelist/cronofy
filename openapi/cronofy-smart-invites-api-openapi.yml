@@ -78,19 +78,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    UnprocessableEntity:
-      description: The request was well-formed but contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The access token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     SmartInviteRequest:
       type: object
@@ -119,6 +106,33 @@ components:
               format: email
         event:
           $ref: '#/components/schemas/UpsertEventRequest'
+    SmartInviteResponse:
+      type: object
+      properties:
+        smart_invite_id:
+          type: string
+        callback_url:
+          type: string
+          format: uri
+        recipient:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            status:
+              type: string
+              enum:
+              - pending
+              - accepted
+              - declined
+              - tentative
+        attachments:
+          type: object
+          properties:
+            icalendar:
+              type: string
+              description: The iCalendar (.ics) attachment representing the invite.
     Error:
       type: object
       properties:
@@ -171,33 +185,19 @@ components:
           enum:
           - opaque
           - transparent
-    SmartInviteResponse:
-      type: object
-      properties:
-        smart_invite_id:
-          type: string
-        callback_url:
-          type: string
-          format: uri
-        recipient:
-          type: object
-          properties:
-            email:
-              type: string
-              format: email
-            status:
-              type: string
-              enum:
-              - pending
-              - accepted
-              - declined
-              - tentative
-        attachments:
-          type: object
-          properties:
-            icalendar:
-              type: string
-              description: The iCalendar (.ics) attachment representing the invite.
+  responses:
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

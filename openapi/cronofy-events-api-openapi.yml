@@ -158,14 +158,38 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   schemas:
-    DeleteEventRequest:
+    Pages:
       type: object
-      required:
-      - event_id
       properties:
-        event_id:
+        current:
+          type: integer
+        total:
+          type: integer
+        next_page:
           type: string
-          description: The caller-supplied identifier of the event to delete.
+    FreeBusyList:
+      type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Pages'
+        free_busy:
+          type: array
+          items:
+            type: object
+            properties:
+              calendar_id:
+                type: string
+              start:
+                type: string
+              end:
+                type: string
+              free_busy_status:
+                type: string
+                enum:
+                - free
+                - tentative
+                - busy
+                - unavailable
     Attendee:
       type: object
       properties:
@@ -181,6 +205,14 @@ components:
           - accepted
           - declined
           - tentative
+    DeleteEventRequest:
+      type: object
+      required:
+      - event_id
+      properties:
+        event_id:
+          type: string
+          description: The caller-supplied identifier of the event to delete.
     Event:
       type: object
       properties:
@@ -215,38 +247,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attendee'
-    FreeBusyList:
+    Error:
       type: object
       properties:
-        pages:
-          $ref: '#/components/schemas/Pages'
-        free_busy:
-          type: array
-          items:
-            type: object
-            properties:
-              calendar_id:
-                type: string
-              start:
-                type: string
-              end:
-                type: string
-              free_busy_status:
-                type: string
-                enum:
-                - free
-                - tentative
-                - busy
-                - unavailable
-    Pages:
-      type: object
-      properties:
-        current:
-          type: integer
-        total:
-          type: integer
-        next_page:
-          type: string
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
     UpsertEventRequest:
       type: object
       required:
@@ -292,13 +299,6 @@ components:
           enum:
           - opaque
           - transparent
-    Error:
-      type: object
-      properties:
-        errors:
-          type: object
-          additionalProperties: true
-          description: A map of field names to arrays of error descriptions.
     EventList:
       type: object
       properties:
@@ -308,6 +308,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Event'
+  parameters:
+    CalendarId:
+      name: calendar_id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The Cronofy id of the target calendar.
   responses:
     UnprocessableEntity:
       description: The request was well-formed but contained invalid parameters.
@@ -321,14 +329,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    CalendarId:
-      name: calendar_id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The Cronofy id of the target calendar.
   securitySchemes:
     bearerAuth:
       type: http

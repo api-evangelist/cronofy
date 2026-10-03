@@ -85,7 +85,25 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    ChannelWrapper:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/Channel'
     ChannelList:
       type: object
       properties:
@@ -118,11 +136,6 @@ components:
                 type: string
             only_managed:
               type: boolean
-    ChannelWrapper:
-      type: object
-      properties:
-        channel:
-          $ref: '#/components/schemas/Channel'
     Channel:
       type: object
       properties:
@@ -134,19 +147,6 @@ components:
         filters:
           type: object
           additionalProperties: true
-  responses:
-    UnprocessableEntity:
-      description: The request was well-formed but contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The access token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
