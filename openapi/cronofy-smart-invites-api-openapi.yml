@@ -79,67 +79,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    SmartInviteRequest:
-      type: object
-      required:
-      - smart_invite_id
-      - callback_url
-      - recipient
-      - event
-      properties:
-        method:
-          type: string
-          enum:
-          - request
-          - cancel
-          description: Use "cancel" to cancel a previously sent invite.
-        smart_invite_id:
-          type: string
-        callback_url:
-          type: string
-          format: uri
-        recipient:
-          type: object
-          properties:
-            email:
-              type: string
-              format: email
-        event:
-          $ref: '#/components/schemas/UpsertEventRequest'
-    SmartInviteResponse:
-      type: object
-      properties:
-        smart_invite_id:
-          type: string
-        callback_url:
-          type: string
-          format: uri
-        recipient:
-          type: object
-          properties:
-            email:
-              type: string
-              format: email
-            status:
-              type: string
-              enum:
-              - pending
-              - accepted
-              - declined
-              - tentative
-        attachments:
-          type: object
-          properties:
-            icalendar:
-              type: string
-              description: The iCalendar (.ics) attachment representing the invite.
-    Error:
-      type: object
-      properties:
-        errors:
-          type: object
-          additionalProperties: true
-          description: A map of field names to arrays of error descriptions.
     UpsertEventRequest:
       type: object
       required:
@@ -185,6 +124,67 @@ components:
           enum:
           - opaque
           - transparent
+    SmartInviteResponse:
+      type: object
+      properties:
+        smart_invite_id:
+          type: string
+        callback_url:
+          type: string
+          format: uri
+        recipient:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            status:
+              type: string
+              enum:
+              - pending
+              - accepted
+              - declined
+              - tentative
+        attachments:
+          type: object
+          properties:
+            icalendar:
+              type: string
+              description: The iCalendar (.ics) attachment representing the invite.
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
+    SmartInviteRequest:
+      type: object
+      required:
+      - smart_invite_id
+      - callback_url
+      - recipient
+      - event
+      properties:
+        method:
+          type: string
+          enum:
+          - request
+          - cancel
+          description: Use "cancel" to cancel a previously sent invite.
+        smart_invite_id:
+          type: string
+        callback_url:
+          type: string
+          format: uri
+        recipient:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+        event:
+          $ref: '#/components/schemas/UpsertEventRequest'
   responses:
     UnprocessableEntity:
       description: The request was well-formed but contained invalid parameters.

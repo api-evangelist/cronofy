@@ -158,6 +158,15 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   schemas:
+    EventList:
+      type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Pages'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
     Pages:
       type: object
       properties:
@@ -167,93 +176,6 @@ components:
           type: integer
         next_page:
           type: string
-    FreeBusyList:
-      type: object
-      properties:
-        pages:
-          $ref: '#/components/schemas/Pages'
-        free_busy:
-          type: array
-          items:
-            type: object
-            properties:
-              calendar_id:
-                type: string
-              start:
-                type: string
-              end:
-                type: string
-              free_busy_status:
-                type: string
-                enum:
-                - free
-                - tentative
-                - busy
-                - unavailable
-    Attendee:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        display_name:
-          type: string
-        status:
-          type: string
-          enum:
-          - needs_action
-          - accepted
-          - declined
-          - tentative
-    DeleteEventRequest:
-      type: object
-      required:
-      - event_id
-      properties:
-        event_id:
-          type: string
-          description: The caller-supplied identifier of the event to delete.
-    Event:
-      type: object
-      properties:
-        calendar_id:
-          type: string
-        event_uid:
-          type: string
-        summary:
-          type: string
-        description:
-          type: string
-        start:
-          type: string
-          description: An RFC 3339 timestamp or a date for all-day events.
-        end:
-          type: string
-        location:
-          type: object
-          properties:
-            description:
-              type: string
-        deleted:
-          type: boolean
-        free_busy_status:
-          type: string
-          enum:
-          - free
-          - tentative
-          - busy
-          - unavailable
-        attendees:
-          type: array
-          items:
-            $ref: '#/components/schemas/Attendee'
-    Error:
-      type: object
-      properties:
-        errors:
-          type: object
-          additionalProperties: true
-          description: A map of field names to arrays of error descriptions.
     UpsertEventRequest:
       type: object
       required:
@@ -299,15 +221,93 @@ components:
           enum:
           - opaque
           - transparent
-    EventList:
+    Event:
+      type: object
+      properties:
+        calendar_id:
+          type: string
+        event_uid:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        start:
+          type: string
+          description: An RFC 3339 timestamp or a date for all-day events.
+        end:
+          type: string
+        location:
+          type: object
+          properties:
+            description:
+              type: string
+        deleted:
+          type: boolean
+        free_busy_status:
+          type: string
+          enum:
+          - free
+          - tentative
+          - busy
+          - unavailable
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attendee'
+    Attendee:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        display_name:
+          type: string
+        status:
+          type: string
+          enum:
+          - needs_action
+          - accepted
+          - declined
+          - tentative
+    DeleteEventRequest:
+      type: object
+      required:
+      - event_id
+      properties:
+        event_id:
+          type: string
+          description: The caller-supplied identifier of the event to delete.
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
+    FreeBusyList:
       type: object
       properties:
         pages:
           $ref: '#/components/schemas/Pages'
-        events:
+        free_busy:
           type: array
           items:
-            $ref: '#/components/schemas/Event'
+            type: object
+            properties:
+              calendar_id:
+                type: string
+              start:
+                type: string
+              end:
+                type: string
+              free_busy_status:
+                type: string
+                enum:
+                - free
+                - tentative
+                - busy
+                - unavailable
   parameters:
     CalendarId:
       name: calendar_id

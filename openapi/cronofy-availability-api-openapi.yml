@@ -117,52 +117,6 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   schemas:
-    RealTimeSchedulingRequest:
-      type: object
-      required:
-      - oauth
-      - event
-      - availability
-      - target_calendars
-      properties:
-        oauth:
-          type: object
-          properties:
-            redirect_uri:
-              type: string
-              format: uri
-        event:
-          $ref: '#/components/schemas/UpsertEventRequest'
-        availability:
-          $ref: '#/components/schemas/AvailabilityRequest'
-        target_calendars:
-          type: array
-          items:
-            type: object
-            properties:
-              sub:
-                type: string
-              calendar_id:
-                type: string
-    AvailabilityResponse:
-      type: object
-      properties:
-        available_periods:
-          type: array
-          items:
-            type: object
-            properties:
-              start:
-                type: string
-              end:
-                type: string
-              participants:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    sub:
-                      type: string
     AvailabilityRequest:
       type: object
       required:
@@ -201,13 +155,18 @@ components:
                 type: string
               end:
                 type: string
-    Error:
+    RealTimeSchedulingResponse:
       type: object
       properties:
-        errors:
+        real_time_scheduling:
           type: object
-          additionalProperties: true
-          description: A map of field names to arrays of error descriptions.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The hosted scheduling page URL to present to the invitee.
+            status:
+              type: string
     UpsertEventRequest:
       type: object
       required:
@@ -253,18 +212,59 @@ components:
           enum:
           - opaque
           - transparent
-    RealTimeSchedulingResponse:
+    RealTimeSchedulingRequest:
       type: object
+      required:
+      - oauth
+      - event
+      - availability
+      - target_calendars
       properties:
-        real_time_scheduling:
+        oauth:
           type: object
           properties:
-            url:
+            redirect_uri:
               type: string
               format: uri
-              description: The hosted scheduling page URL to present to the invitee.
-            status:
-              type: string
+        event:
+          $ref: '#/components/schemas/UpsertEventRequest'
+        availability:
+          $ref: '#/components/schemas/AvailabilityRequest'
+        target_calendars:
+          type: array
+          items:
+            type: object
+            properties:
+              sub:
+                type: string
+              calendar_id:
+                type: string
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
+    AvailabilityResponse:
+      type: object
+      properties:
+        available_periods:
+          type: array
+          items:
+            type: object
+            properties:
+              start:
+                type: string
+              end:
+                type: string
+              participants:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sub:
+                      type: string
   responses:
     UnprocessableEntity:
       description: The request was well-formed but contained invalid parameters.

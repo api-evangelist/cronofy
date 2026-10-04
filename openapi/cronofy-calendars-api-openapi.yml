@@ -83,35 +83,12 @@ paths:
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
 components:
-  responses:
-    UnprocessableEntity:
-      description: The request was well-formed but contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The access token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    CreateCalendarRequest:
+    CalendarWrapper:
       type: object
-      required:
-      - profile_id
-      - name
       properties:
-        profile_id:
-          type: string
-          description: The profile within which to create the calendar.
-        name:
-          type: string
-          description: The name of the new calendar.
-        color:
-          type: string
-          description: An optional hex color for the calendar.
+        calendar:
+          $ref: '#/components/schemas/Calendar'
     CalendarList:
       type: object
       properties:
@@ -119,17 +96,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Calendar'
-    UserInfo:
-      type: object
-      properties:
-        sub:
-          type: string
-          description: The unique account identifier.
-        cronofy.type:
-          type: string
-        cronofy.data:
-          type: object
-          additionalProperties: true
     Calendar:
       type: object
       properties:
@@ -152,6 +118,32 @@ components:
           type: boolean
         permission_level:
           type: string
+    CreateCalendarRequest:
+      type: object
+      required:
+      - profile_id
+      - name
+      properties:
+        profile_id:
+          type: string
+          description: The profile within which to create the calendar.
+        name:
+          type: string
+          description: The name of the new calendar.
+        color:
+          type: string
+          description: An optional hex color for the calendar.
+    UserInfo:
+      type: object
+      properties:
+        sub:
+          type: string
+          description: The unique account identifier.
+        cronofy.type:
+          type: string
+        cronofy.data:
+          type: object
+          additionalProperties: true
     Error:
       type: object
       properties:
@@ -159,11 +151,19 @@ components:
           type: object
           additionalProperties: true
           description: A map of field names to arrays of error descriptions.
-    CalendarWrapper:
-      type: object
-      properties:
-        calendar:
-          $ref: '#/components/schemas/Calendar'
+  responses:
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

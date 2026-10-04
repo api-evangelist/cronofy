@@ -85,39 +85,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    UnprocessableEntity:
-      description: The request was well-formed but contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The access token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    ChannelWrapper:
-      type: object
-      properties:
-        channel:
-          $ref: '#/components/schemas/Channel'
-    ChannelList:
-      type: object
-      properties:
-        channels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Channel'
-    Error:
-      type: object
-      properties:
-        errors:
-          type: object
-          additionalProperties: true
-          description: A map of field names to arrays of error descriptions.
     CreateChannelRequest:
       type: object
       required:
@@ -136,6 +104,13 @@ components:
                 type: string
             only_managed:
               type: boolean
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
     Channel:
       type: object
       properties:
@@ -147,6 +122,31 @@ components:
         filters:
           type: object
           additionalProperties: true
+    ChannelWrapper:
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/Channel'
+    ChannelList:
+      type: object
+      properties:
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Channel'
+  responses:
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
