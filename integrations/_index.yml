@@ -15,3 +15,28 @@
   relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
+- slug: cronofy-bamboohr-own
+  label: BambooHR (own)
+  partner: bamboohr
+  partner_name: BambooHR (own)
+  category: Applicant Tracking Systems
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.bamboohr.com/integrations/listings/cronofy
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: cronofy-greenhouse-own
+  label: Greenhouse (own)
+  partner: greenhouse
+  partner_name: Greenhouse (own)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://integrations.greenhouse.com/partners/cronofy
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

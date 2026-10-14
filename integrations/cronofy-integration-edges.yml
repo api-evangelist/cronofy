@@ -1,6 +1,8 @@
 generated: '2026-10-13'
 method: searched
 checked:
+- bamboohr/integrations/bamboohr-integration-edges.yml
+- greenhouse/integrations/greenhouse-integration-edges.yml
 - https://azuremarketplace.microsoft.com/
 marketplace_apps: []
 edges:
@@ -19,3 +21,39 @@ edges:
   seller_name: Cronofy Ltd
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
+- partner_name: BambooHR (own)
+  partner: bamboohr
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.bamboohr.com/integrations/listings/cronofy
+  mirror_of: bamboohr/integrations/bamboohr-integration-edges.yml
+  apps:
+  - Cronofy
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Applicant Tracking Systems
+- partner_name: Greenhouse (own)
+  partner: greenhouse
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://integrations.greenhouse.com/partners/cronofy
+  mirror_of: greenhouse/integrations/greenhouse-integration-edges.yml
+  apps:
+  - Cronofy
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+source:
+- bamboohr/integrations/bamboohr-integration-edges.yml
+- greenhouse/integrations/greenhouse-integration-edges.yml
