@@ -158,15 +158,44 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
 components:
   schemas:
-    EventList:
+    FreeBusyList:
       type: object
       properties:
         pages:
           $ref: '#/components/schemas/Pages'
-        events:
+        free_busy:
           type: array
           items:
-            $ref: '#/components/schemas/Event'
+            type: object
+            properties:
+              calendar_id:
+                type: string
+              start:
+                type: string
+              end:
+                type: string
+              free_busy_status:
+                type: string
+                enum:
+                - free
+                - tentative
+                - busy
+                - unavailable
+    Attendee:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        display_name:
+          type: string
+        status:
+          type: string
+          enum:
+          - needs_action
+          - accepted
+          - declined
+          - tentative
     Pages:
       type: object
       properties:
@@ -176,6 +205,22 @@ components:
           type: integer
         next_page:
           type: string
+    EventList:
+      type: object
+      properties:
+        pages:
+          $ref: '#/components/schemas/Pages'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
     UpsertEventRequest:
       type: object
       required:
@@ -255,21 +300,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Attendee'
-    Attendee:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        display_name:
-          type: string
-        status:
-          type: string
-          enum:
-          - needs_action
-          - accepted
-          - declined
-          - tentative
     DeleteEventRequest:
       type: object
       required:
@@ -278,36 +308,19 @@ components:
         event_id:
           type: string
           description: The caller-supplied identifier of the event to delete.
-    Error:
-      type: object
-      properties:
-        errors:
-          type: object
-          additionalProperties: true
-          description: A map of field names to arrays of error descriptions.
-    FreeBusyList:
-      type: object
-      properties:
-        pages:
-          $ref: '#/components/schemas/Pages'
-        free_busy:
-          type: array
-          items:
-            type: object
-            properties:
-              calendar_id:
-                type: string
-              start:
-                type: string
-              end:
-                type: string
-              free_busy_status:
-                type: string
-                enum:
-                - free
-                - tentative
-                - busy
-                - unavailable
+  responses:
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     CalendarId:
       name: calendar_id
@@ -316,19 +329,6 @@ components:
       schema:
         type: string
       description: The Cronofy id of the target calendar.
-  responses:
-    UnprocessableEntity:
-      description: The request was well-formed but contained invalid parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The access token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

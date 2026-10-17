@@ -155,6 +155,33 @@ components:
                 type: string
               end:
                 type: string
+    RealTimeSchedulingRequest:
+      type: object
+      required:
+      - oauth
+      - event
+      - availability
+      - target_calendars
+      properties:
+        oauth:
+          type: object
+          properties:
+            redirect_uri:
+              type: string
+              format: uri
+        event:
+          $ref: '#/components/schemas/UpsertEventRequest'
+        availability:
+          $ref: '#/components/schemas/AvailabilityRequest'
+        target_calendars:
+          type: array
+          items:
+            type: object
+            properties:
+              sub:
+                type: string
+              calendar_id:
+                type: string
     RealTimeSchedulingResponse:
       type: object
       properties:
@@ -167,6 +194,13 @@ components:
               description: The hosted scheduling page URL to present to the invitee.
             status:
               type: string
+    Error:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: true
+          description: A map of field names to arrays of error descriptions.
     UpsertEventRequest:
       type: object
       required:
@@ -212,40 +246,6 @@ components:
           enum:
           - opaque
           - transparent
-    RealTimeSchedulingRequest:
-      type: object
-      required:
-      - oauth
-      - event
-      - availability
-      - target_calendars
-      properties:
-        oauth:
-          type: object
-          properties:
-            redirect_uri:
-              type: string
-              format: uri
-        event:
-          $ref: '#/components/schemas/UpsertEventRequest'
-        availability:
-          $ref: '#/components/schemas/AvailabilityRequest'
-        target_calendars:
-          type: array
-          items:
-            type: object
-            properties:
-              sub:
-                type: string
-              calendar_id:
-                type: string
-    Error:
-      type: object
-      properties:
-        errors:
-          type: object
-          additionalProperties: true
-          description: A map of field names to arrays of error descriptions.
     AvailabilityResponse:
       type: object
       properties:
@@ -266,14 +266,14 @@ components:
                     sub:
                       type: string
   responses:
-    UnprocessableEntity:
-      description: The request was well-formed but contained invalid parameters.
+    Unauthorized:
+      description: The access token is missing, invalid, or expired.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The access token is missing, invalid, or expired.
+    UnprocessableEntity:
+      description: The request was well-formed but contained invalid parameters.
       content:
         application/json:
           schema:
