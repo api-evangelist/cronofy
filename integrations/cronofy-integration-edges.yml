@@ -2,8 +2,12 @@ generated: '2026-10-13'
 method: searched
 checked:
 - bamboohr/integrations/bamboohr-integration-edges.yml
+- google-workspace/integrations/google-workspace-integration-edges.yml
 - greenhouse/integrations/greenhouse-integration-edges.yml
 - https://azuremarketplace.microsoft.com/
+- microsoft-teams/integrations/microsoft-teams-integration-edges.yml
+- slack/integrations/slack-integration-edges.yml
+- zoom/integrations/zoom-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: Microsoft Azure Marketplace
@@ -54,6 +58,74 @@ edges:
   listing_count: 1
   detected: '2026-10-14'
   detected_by: mirror-platform-listings.py
+- partner_name: Google Workspace (own)
+  partner: google-workspace
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://workspace.google.com/marketplace/app/cronofy_enterprise/902414518019
+  mirror_of: google-workspace/integrations/google-workspace-integration-edges.yml
+  apps:
+  - Cronofy Enterprise
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Google Workspace app
+- partner_name: Microsoft Teams (own)
+  partner: microsoft-teams
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://appsource.microsoft.com/en-us/product/office/WA200010416
+  mirror_of: microsoft-teams/integrations/microsoft-teams-integration-edges.yml
+  apps:
+  - Cronofy Scheduling Agent
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Microsoft Teams app
+- partner_name: Slack (own)
+  partner: slack
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://slack.com/marketplace/A02CYEBTB2N-cronofy
+  mirror_of: slack/integrations/slack-integration-edges.yml
+  apps:
+  - Cronofy
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Slack app
+- partner_name: Zoom (own)
+  partner: zoom
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.zoom.us/apps/Tgrb4Q1xR1alHB6Lmkd7Ag
+  mirror_of: zoom/integrations/zoom-integration-edges.yml
+  apps:
+  - Cronofy
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Zoom app
 source:
 - bamboohr/integrations/bamboohr-integration-edges.yml
 - greenhouse/integrations/greenhouse-integration-edges.yml
