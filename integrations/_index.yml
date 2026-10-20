@@ -28,18 +28,6 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
-- slug: cronofy-greenhouse-own
-  label: Greenhouse (own)
-  partner: greenhouse
-  partner_name: Greenhouse (own)
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://integrations.greenhouse.com/partners/cronofy
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: cronofy-google-workspace-own
   label: Google Workspace (own)
   partner: google-workspace
@@ -49,6 +37,18 @@
   marketplace: own
   channel: partner-built
   evidence: https://workspace.google.com/marketplace/app/cronofy_enterprise/902414518019
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: cronofy-greenhouse-own
+  label: Greenhouse (own)
+  partner: greenhouse
+  partner_name: Greenhouse (own)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://integrations.greenhouse.com/partners/cronofy
   source: edge
   relationship: platform-app
   status: not-a-workflow
@@ -75,6 +75,19 @@
   marketplace: own
   channel: partner-built
   evidence: https://slack.com/marketplace/A02CYEBTB2N-cronofy
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: cronofy-zendesk-own
+  label: Zendesk (own)
+  partner: zendesk
+  partner_name: Zendesk (own)
+  category: WEM
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.zendesk.com/marketplace/apps/support/261155/cronofy/
   source: edge
   relationship: platform-app
   status: not-a-workflow

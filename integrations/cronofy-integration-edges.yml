@@ -7,6 +7,7 @@ checked:
 - https://azuremarketplace.microsoft.com/
 - microsoft-teams/integrations/microsoft-teams-integration-edges.yml
 - slack/integrations/slack-integration-edges.yml
+- zendesk/integrations/zendesk-integration-edges.yml
 - zoom/integrations/zoom-integration-edges.yml
 marketplace_apps: []
 edges:
@@ -42,22 +43,6 @@ edges:
   detected: '2026-10-14'
   detected_by: mirror-platform-listings.py
   category: Applicant Tracking Systems
-- partner_name: Greenhouse (own)
-  partner: greenhouse
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://integrations.greenhouse.com/partners/cronofy
-  mirror_of: greenhouse/integrations/greenhouse-integration-edges.yml
-  apps:
-  - Cronofy
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
 - partner_name: Google Workspace (own)
   partner: google-workspace
   partner_match: mirror
@@ -75,6 +60,22 @@ edges:
   detected: '2026-10-18'
   detected_by: mirror-platform-listings.py
   category: Google Workspace app
+- partner_name: Greenhouse (own)
+  partner: greenhouse
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://integrations.greenhouse.com/partners/cronofy
+  mirror_of: greenhouse/integrations/greenhouse-integration-edges.yml
+  apps:
+  - Cronofy
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
 - partner_name: Microsoft Teams (own)
   partner: microsoft-teams
   partner_match: mirror
@@ -109,6 +110,23 @@ edges:
   detected: '2026-10-18'
   detected_by: mirror-platform-listings.py
   category: Slack app
+- partner_name: Zendesk (own)
+  partner: zendesk
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.zendesk.com/marketplace/apps/support/261155/cronofy/
+  mirror_of: zendesk/integrations/zendesk-integration-edges.yml
+  apps:
+  - Cronofy
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: WEM
 - partner_name: Zoom (own)
   partner: zoom
   partner_match: mirror
